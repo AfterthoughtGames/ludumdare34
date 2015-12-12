@@ -16,6 +16,8 @@ namespace CornflowrCorban
 
         KeyboardState oldState;
 
+        static Texture2D Pixel;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -70,26 +72,30 @@ namespace CornflowrCorban
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (newState.IsKeyDown(Keys.W) && !oldState.IsKeyDown(Keys.W))
+            if (newState.IsKeyDown(Keys.W))
             {
                 //do up
+                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y - 15));
             }
 
-            if (newState.IsKeyDown(Keys.S) && !oldState.IsKeyDown(Keys.S))
+            if (newState.IsKeyDown(Keys.S))
             {
                 //do down
+                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y + 15));
             }
 
-            if (newState.IsKeyDown(Keys.A) && !oldState.IsKeyDown(Keys.A))
+            if (newState.IsKeyDown(Keys.A))
             {
                 //do left
+                Player.Position = new Vector2((Player.Position.X - 15), Player.Position.Y);
             }
 
-            if (newState.IsKeyDown(Keys.D) && !oldState.IsKeyDown(Keys.D))
+            if (newState.IsKeyDown(Keys.D))
             {
                 //do right
+                Player.Position = new Vector2((Player.Position.X + 15), Player.Position.Y);
             }
-
+            Player.Update(gameTime);
             oldState = newState;
             // TODO: Add your update logic here
 
@@ -103,9 +109,34 @@ namespace CornflowrCorban
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            int LineThickness = 3;
+            int RedValue = 255;
+            int BlueValue = 0;
+            int GreenValue = 0;
 
+
+            Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+            Pixel.SetData<Color>(new Color[] { Color.White });
             spriteBatch.Begin();
-            spriteBatch.Draw(Player.Image, Player.HitBox, Color.White);
+
+            Rectangle ObjectRect = new Rectangle((int)Player.Position.X, (int)Player.Position.Y, Player.Image.Width, Player.Image.Height);
+
+            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.Left - LineThickness, ObjectRect.Y, LineThickness, ObjectRect.Height),
+                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255));//This is the line on the Left
+
+            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.Right, ObjectRect.Y, LineThickness, ObjectRect.Height),
+                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Right
+
+            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.X, ObjectRect.Top - LineThickness, ObjectRect.Width, LineThickness),
+                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Top
+
+            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.X, ObjectRect.Bottom, ObjectRect.Width, LineThickness),
+                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Bottom
+
+
+
+            
+            spriteBatch.Draw(Player.Image, Player.Position, Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
