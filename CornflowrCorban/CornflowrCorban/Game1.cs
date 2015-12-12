@@ -23,6 +23,7 @@ namespace CornflowrCorban
         List<Laser> lasers;
         List<Bubble> bubbles;
         List<Bubble> topBubbles;
+        
 
         Random rand = new Random(DateTime.Now.Millisecond);
 
@@ -33,6 +34,7 @@ namespace CornflowrCorban
         public static Texture2D Pixel;
         public static Texture2D LaserImage;
         public static Texture2D BubbleImage;
+        public static Vector2 AdditionalVelocity;
 
         public Game1()
         {
@@ -102,6 +104,8 @@ namespace CornflowrCorban
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            AdditionalVelocity = new Vector2(-1000 * (Player.Position.X / graphics.PreferredBackBufferWidth), 0);
+
             KeyboardState newState = Keyboard.GetState();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -129,6 +133,12 @@ namespace CornflowrCorban
             {
                 //do right
                 Player.Position = new Vector2((Player.Position.X + Player.Velocity), Player.Position.Y);
+            }
+
+            if (newState.IsKeyDown(Keys.F1) && !oldState.IsKeyDown(Keys.F1))
+            {
+                //debug toggle
+                Debug = !Debug;
             }
 
             if (newState.IsKeyDown(Keys.Space))
@@ -212,16 +222,16 @@ namespace CornflowrCorban
             int topTotal = total;
             while(total > 0)
             {
-                Bubble bubble = new Bubble(new Vector2(graphics.PreferredBackBufferWidth + rand.Next(0, graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
-                    (float)rand.NextDouble()/2, BubbleImage, new Vector2(-500, 0),new Color(100,100,100,100));
+                Bubble bubble = new Bubble(new Vector2(-graphics.PreferredBackBufferWidth + rand.Next(0, 2*graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
+                    (float)rand.NextDouble()/2, BubbleImage, new Vector2(-300, 0),new Color(100,100,100,100));
                 bubbles.Add(bubble);
                 total--;
             }
 
             while (topTotal > 0)
             {
-                Bubble bubble = new Bubble(new Vector2(graphics.PreferredBackBufferWidth + rand.Next(0, graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
-                    (float)rand.NextDouble() / 2, BubbleImage, new Vector2(-500, 0),Color.White);
+                Bubble bubble = new Bubble(new Vector2(-graphics.PreferredBackBufferWidth + rand.Next(0, 2*graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
+                    (float)rand.NextDouble() / 2, BubbleImage, new Vector2(-300, 0),Color.White);
                 topBubbles.Add(bubble);
                 topTotal--;
             }
