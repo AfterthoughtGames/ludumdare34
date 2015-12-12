@@ -26,7 +26,7 @@ namespace CornflowrCorban
             HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 4 * Scale),
                     (int)Position.Y - (int)(Image.Height /2.5f * Scale), (int)(Image.Width /3* Scale), (int)(Image.Height/1.2 * Scale));
 
-            Position += Velocity;
+            Position += Velocity + Game1.AdditionalVelocity/200;
 
             if(Position.X < -100)
             {
