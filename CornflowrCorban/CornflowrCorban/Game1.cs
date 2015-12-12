@@ -12,7 +12,10 @@ namespace CornflowrCorban
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        WhaleOfAPlayer Player { get; set; }
+
         KeyboardState oldState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,7 +43,7 @@ namespace CornflowrCorban
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
@@ -67,7 +70,7 @@ namespace CornflowrCorban
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if(newState.IsKeyDown(Keys.W) && !oldState.IsKeyDown(Keys.W))
+            if (newState.IsKeyDown(Keys.W) && !oldState.IsKeyDown(Keys.W))
             {
                 //do up
             }
@@ -101,7 +104,9 @@ namespace CornflowrCorban
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(Player.Image, Player.HitBox, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
