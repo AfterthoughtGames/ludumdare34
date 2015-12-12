@@ -14,6 +14,7 @@ namespace CornflowrCorban
         int RedValue = 255;
         int BlueValue = 0;
         int GreenValue = 0;
+        public int DamageValue = 1;
 
         public Laser(Vector2 position, float scale, Texture2D image,Vector2 velocity)
         {
@@ -22,11 +23,14 @@ namespace CornflowrCorban
             Position = position;
 
             this.velocity = velocity;
+            Health = 1;
         }
 
-        public void Update(GameTime gametime)
+        public override void Update(GameTime gameTime)
         {
-            Position += velocity * (gametime.ElapsedGameTime.Milliseconds / 1000f);
+            Position += velocity * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
+
+            base.Update(gameTime);
         }
 
         public void Draw(SpriteBatch batch)

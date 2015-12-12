@@ -12,7 +12,7 @@ namespace CornflowrCorban
         Rectangle SpawnBox { get; set; }
         Random POSVarance { get; set; }
 
-        List<Entity> EntityBag { get; set; }
+        public List<Entity> EntityBag { get; set; }
 
         SimpleBadFish Fish1 { get; set; }
 

@@ -175,6 +175,8 @@ namespace CornflowrCorban
 
             Gen.Update(gameTime);
 
+            CollsionDetection();
+
             base.Update(gameTime);
         }
 
@@ -258,6 +260,32 @@ namespace CornflowrCorban
                     b.Position = new Vector2(graphics.PreferredBackBufferWidth + rand.Next(0, graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight));
                 }
             }
+        }
+
+        private void CollsionDetection()
+        {
+            // player
+            // projectiles
+            // eninmies 
+
+            foreach(Entity currentEn in Gen.EntityBag)
+            {
+                if(Player.HitBox.Intersects(currentEn.HitBox) && currentEn.Dead == false)
+                {
+                    Player.Damage(1);
+                    currentEn.Damage(currentEn.Health);
+                }
+
+                foreach(Laser currentBeam in lasers)
+                {
+                    if(currentEn.HitBox.Intersects(currentBeam.HitBox))
+                    {
+                         currentEn.Damage(currentBeam.DamageValue);
+                        currentBeam.Damage(1);
+                    }
+                }
+            }
+
         }
     }
 }

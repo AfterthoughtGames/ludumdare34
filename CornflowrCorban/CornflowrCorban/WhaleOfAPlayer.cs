@@ -16,7 +16,7 @@ namespace CornflowrCorban
 
             
 
-        public WhaleOfAPlayer(Texture2D image)
+        public WhaleOfAPlayer(Texture2D image) : base()
         {
             Image = image;
             this.Scale = 1;

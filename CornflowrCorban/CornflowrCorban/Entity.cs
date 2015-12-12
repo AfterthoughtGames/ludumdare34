@@ -9,6 +9,7 @@ namespace CornflowrCorban
 {
     public class Entity
     {
+        public bool Dead { get; set; }
         public Texture2D Image { get; set; }
         public float Scale { get; set; }
         public Vector2 Position { get; set; }
@@ -23,9 +24,23 @@ namespace CornflowrCorban
         int GreenValue = 0;
         int LineThickness = 3;
 
+        public Entity()
+        {
+            Dead = false;
+        }
+
         public virtual void Update(GameTime gameTime)
         {
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * Image.Width), (int)(Scale * Image.Height));
+        }
+
+        public void Damage(int amount)
+        {
+            Health -= amount;
+            if(Health <= 0)
+            {
+                Dead = true;
+            }
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch batch)
@@ -49,6 +64,7 @@ namespace CornflowrCorban
 
             }
 
+            if(Dead == false)
             batch.Draw(Image, Position, null, Color.White, 0, new Vector2(Image.Width / 2, Image.Height / 2), Scale, SpriteEffects.None, 0);
         }
     }
