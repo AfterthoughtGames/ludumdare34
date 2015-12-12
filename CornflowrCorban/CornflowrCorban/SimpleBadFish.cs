@@ -9,13 +9,16 @@ namespace CornflowrCorban
 {
     public class SimpleBadFish : Entity
     {
-        public SimpleBadFish(Texture2D image, Vector2 startPOS) : base()
+        public Vector2 Velocity;
+
+        public SimpleBadFish(Texture2D image, Vector2 startPOS, Vector2 velocity, float scale) : base()
         {
             Image = image;
-            Scale = 1;
+            Scale = scale;
             Position = startPOS;
             Health = 2;
             PointValue = 2;
+            Velocity = velocity;
         }
 
         public override void Update(GameTime gameTime)
@@ -23,17 +26,22 @@ namespace CornflowrCorban
             HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 4 * Scale),
                     (int)Position.Y - (int)(Image.Height /2.5f * Scale), (int)(Image.Width /3* Scale), (int)(Image.Height/1.2 * Scale));
 
-            Position = new Vector2(Position.X - 10, Position.Y);
+            Position += Velocity;
+
+            if(Position.X < -100)
+            {
+                Dead = true;
+            }
         }
 
         public SimpleBadFish Clone()
         {
-            return new SimpleBadFish(this.Image, this.Position);
+            return new SimpleBadFish(this.Image, this.Position, this.Velocity, this.Scale);
         }
 
-        public SimpleBadFish Clone(Vector2 pos)
+        public SimpleBadFish Clone(Vector2 pos, Vector2 velocity, float scale)
         {
-            SimpleBadFish tempFish = new SimpleBadFish(this.Image, this.Position);
+            SimpleBadFish tempFish = new SimpleBadFish(this.Image, this.Position, velocity, scale);
             tempFish.Position = pos;
             return tempFish;
         }
