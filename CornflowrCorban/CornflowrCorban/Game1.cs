@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace CornflowrCorban
 {
@@ -18,9 +19,11 @@ namespace CornflowrCorban
 
         KeyboardState oldState;
 
-        public static bool Debug = true;
+        List<Laser> lasers;
 
+        public static bool Debug = false;
         public static Texture2D Pixel;
+        public static Texture2D LaserImage;
 
         public Game1()
         {
@@ -54,12 +57,15 @@ namespace CornflowrCorban
         /// </summary>
         protected override void LoadContent()
         {
+            LaserImage = Content.Load<Texture2D>("Laser");
             Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
             Background = RandomStaticStuff.GenerateBubuleField(GraphicsDevice, Content.Load<Texture2D>("Bubble"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             Pixel.SetData<Color>(new Color[] { Color.White });
+
+            lasers = new List<Laser>();
 
             // TODO: use this.Content to load your game content here
         }
@@ -108,6 +114,22 @@ namespace CornflowrCorban
                 //do right
                 Player.Position = new Vector2((Player.Position.X + 15), Player.Position.Y);
             }
+
+            if (newState.IsKeyDown(Keys.Space))
+            {
+                //shoot
+                Laser laser = Player.Shoot(gameTime);
+                if(laser != null)
+                {
+                    lasers.Add(laser);
+                }
+            }
+
+            foreach(Laser l in lasers)
+            {
+                l.Update(gameTime);
+            }
+
             Player.Update(gameTime);
             oldState = newState;
             // TODO: Add your update logic here
@@ -125,9 +147,15 @@ namespace CornflowrCorban
             
             spriteBatch.Begin();
 
-            Player.Draw(spriteBatch);
+            
             spriteBatch.Draw(Background, new Vector2(10, 10), Color.White);
 
+            foreach (Laser l in lasers)
+            {
+                l.Draw(spriteBatch);
+            }
+
+            Player.Draw(spriteBatch);
             
             spriteBatch.End();
 

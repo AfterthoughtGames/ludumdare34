@@ -14,6 +14,8 @@ namespace CornflowrCorban
         int RedValue = 255;
         int BlueValue = 0;
         int GreenValue = 0;
+        int shootingDelay = 250;
+        DateTime lastShot = DateTime.Now;
 
 
             
@@ -24,6 +26,21 @@ namespace CornflowrCorban
             this.Scale = 1;
             this.Position = new Microsoft.Xna.Framework.Vector2(100, 100);
             this.HitBox = new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
+        }
+
+        public Laser Shoot(GameTime gameTime)
+        {
+            if (lastShot.AddMilliseconds(250) < DateTime.Now)
+            {
+                lastShot = DateTime.Now;
+                Scale += .04f;
+                return new Laser(Position + new Vector2(200,-75)*Scale, Scale, Game1.LaserImage, new Vector2(2000, 0));
+                
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void Update(GameTime gameTime)
