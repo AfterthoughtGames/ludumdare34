@@ -34,6 +34,12 @@ namespace CornflowrCorban
                 {
                     finalPointValue += EntityBag[entIndex].PointValue;
                     EntityBag.RemoveAt(entIndex);
+                    return 0;
+                }
+
+                if(EntityBag[entIndex].Position.X < -100)
+                {
+                    EntityBag.RemoveAt(entIndex);
                 }
             }
 
