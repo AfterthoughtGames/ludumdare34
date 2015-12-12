@@ -40,12 +40,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bubble.cs" />
+    <Compile Include="EnemyGen.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Laser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomStaticStuff.cs" />
+    <Compile Include="SimpleBadFish.cs" />
     <Compile Include="WhaleOfAPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
