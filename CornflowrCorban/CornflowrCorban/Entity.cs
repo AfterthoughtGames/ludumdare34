@@ -31,7 +31,8 @@ namespace CornflowrCorban
 
         public virtual void Update(GameTime gameTime)
         {
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, (int)(Scale * Image.Width), (int)(Scale * Image.Height));
+            HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
+                    (int)Position.Y - (int)(Image.Height / 2 * Scale), (int)(Image.Width * Scale), (int)(Image.Height * Scale));
         }
 
         public void Damage(int amount)

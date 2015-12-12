@@ -200,7 +200,7 @@ namespace CornflowrCorban
 
             foreach (Laser l in lasers)
             {
-                l.Draw(spriteBatch);
+                l.Draw(gameTime, spriteBatch);
             }
 
             
