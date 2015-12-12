@@ -24,6 +24,22 @@ namespace CornflowrCorban
             Fish1 = bf;
         }
 
+        public int CleanUp()
+        {
+            int finalPointValue = 0;
+
+            for(int entIndex = 0; entIndex < EntityBag.Count; entIndex++)
+            {
+                if(EntityBag[entIndex].Dead)
+                {
+                    finalPointValue += EntityBag[entIndex].PointValue;
+                    EntityBag.RemoveAt(entIndex);
+                }
+            }
+
+            return finalPointValue;
+        }
+
         public void Update(GameTime gameTime)
         {
             if (EntityBag == null) EntityBag = new List<Entity>();
