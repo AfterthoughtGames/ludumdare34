@@ -57,3 +57,9 @@
 /processorParam:TextureFormat=Color
 /build:Laser.png
 
+#begin GUIFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:GUIFont.spritefont
+

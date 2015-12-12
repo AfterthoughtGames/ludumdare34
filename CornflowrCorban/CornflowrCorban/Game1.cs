@@ -37,6 +37,7 @@ namespace CornflowrCorban
         public static Texture2D LaserImage;
         public static Texture2D BubbleImage;
         public static Vector2 AdditionalVelocity;
+        public static SpriteFont GUIFont;
 
         public Game1()
         {
@@ -61,6 +62,8 @@ namespace CornflowrCorban
 
             base.Initialize();
 
+            this.Window.Title = "Cornflower Corban - Violent Sol Team 12/2015";
+
             oldState = Keyboard.GetState();
 
             Score = 0;
@@ -75,6 +78,7 @@ namespace CornflowrCorban
             LaserImage = Content.Load<Texture2D>("Laser");
             BubbleImage = Content.Load<Texture2D>("Bubble");
             Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
+            GUIFont = Content.Load<SpriteFont>("GUIFont");
             Background = RandomStaticStuff.GenerateBubuleField(GraphicsDevice, Content.Load<Texture2D>("Bubble"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -183,7 +187,7 @@ namespace CornflowrCorban
 
             Score += Gen.CleanUp();
 
-            if(this.Window != null) this.Window.Title = Score.ToString();
+            //if(this.Window != null) this.Window.Title = Score.ToString();
 
             base.Update(gameTime);
         }
@@ -221,7 +225,11 @@ namespace CornflowrCorban
             {
                 b.Draw(spriteBatch);
             }
-            
+
+            spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
+            spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
+            spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
+
             spriteBatch.End();
 
             base.Draw(gameTime);

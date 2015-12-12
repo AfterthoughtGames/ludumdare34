@@ -71,11 +71,13 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\andyb.ttf" />
     <None Include="Content\Bubble.xnb" />
     <None Include="Content\Enemy1.xnb" />
     <Content Include="Content\Laser.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Content\GUIFont.xnb" />
     <None Include="Content\Whale.xnb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
