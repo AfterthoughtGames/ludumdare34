@@ -19,7 +19,7 @@ namespace CornflowrCorban
         public EnemyGen(GraphicsDevice gd, SimpleBadFish bf)
         {
             SpawnBox = new Rectangle(gd.Viewport.Width + 1, 0, gd.Viewport.Height, gd.Viewport.Height);
-            POSVarance = new Random(1337);
+            POSVarance = new Random(DateTime.Now.Millisecond);
 
             Fish1 = bf;
         }
@@ -44,10 +44,13 @@ namespace CornflowrCorban
         {
             if (EntityBag == null) EntityBag = new List<Entity>();
 
-            if(EntityBag.Count < 1)
+            if(EntityBag.Count < 5)
             {
                 //.Position = new Vector2(SpawnBox.Center.X, SpawnBox.Center.Y)
-                EntityBag.Add(Fish1.Clone(new Vector2(SpawnBox.Center.X, SpawnBox.Center.Y)));
+                float scale = ((float)POSVarance.NextDouble());
+                if (scale < .25f) scale = .25f;
+                EntityBag.Add(Fish1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top+SpawnBox.Height)),
+                    new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)),scale));
             }
 
             foreach(Entity currentEnt in EntityBag)
