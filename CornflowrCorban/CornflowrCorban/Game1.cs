@@ -14,6 +14,8 @@ namespace CornflowrCorban
 
         WhaleOfAPlayer Player { get; set; }
 
+        Texture2D Background { get; set; }
+
         KeyboardState oldState;
 
         public Game1()
@@ -44,6 +46,7 @@ namespace CornflowrCorban
         protected override void LoadContent()
         {
             Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
+            Background = RandomStaticStuff.GenerateBubuleField(GraphicsDevice, Content.Load<Texture2D>("Bubble"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
@@ -105,7 +108,11 @@ namespace CornflowrCorban
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            spriteBatch.Draw(Background, new Vector2(10, 10), Color.White);
+
             spriteBatch.Draw(Player.Image, Player.HitBox, Color.White);
+
+            
             spriteBatch.End();
 
             base.Draw(gameTime);
