@@ -68,6 +68,9 @@
   <ItemGroup>
     <None Include="Content\Bubble.xnb" />
     <None Include="Content\Enemy1.xnb" />
+    <Content Include="Content\Laser.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\Whale.xnb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
