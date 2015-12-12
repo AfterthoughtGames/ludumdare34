@@ -28,6 +28,34 @@ namespace CornflowrCorban
             this.HitBox = new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
         }
 
+        private void updatePosition()
+        {
+            float y = Position.Y;
+            float x = Position.X;
+
+            if (y < 0)
+            {
+                y = 0;
+            }
+
+            if (y > Game1.graphics.PreferredBackBufferHeight)
+            {
+                y = Game1.graphics.PreferredBackBufferHeight;
+            }
+
+            if(x<0)
+            {
+                x = 0;
+            }
+
+            if (x > Game1.graphics.PreferredBackBufferWidth)
+            {
+                x = Game1.graphics.PreferredBackBufferWidth;
+            }
+
+            Position = new Vector2(x, y);
+        }
+
         public float Velocity
         { 
             get 
@@ -66,6 +94,7 @@ namespace CornflowrCorban
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
 
             updateScale(gameTime);
+            updatePosition();
         }
 
         public void Draw(SpriteBatch batch)
