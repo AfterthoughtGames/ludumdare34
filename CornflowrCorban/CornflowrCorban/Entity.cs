@@ -16,6 +16,5 @@ namespace CornflowrCorban
         public Rectangle HitBox { get; set; }
 
         public List<Point> AIPath { get; set; }
-
     }
 }

@@ -5,37 +5,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CornflowrCorban 
+namespace CornflowrCorban
 {
-    public class WhaleOfAPlayer : Entity
+    public class Laser : Entity
     {
-        private float normalScale = .25f;
+        private Vector2 velocity;
         int LineThickness = 3;
         int RedValue = 255;
         int BlueValue = 0;
         int GreenValue = 0;
 
-
-            
-
-        public WhaleOfAPlayer(Texture2D image)
+        public Laser(Vector2 position, float scale, Texture2D image,Vector2 velocity)
         {
             Image = image;
-            this.Scale = 1;
-            this.Position = new Microsoft.Xna.Framework.Vector2(100, 100);
-            this.HitBox = new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
+            Scale = scale;
+            Position = position;
+
+            this.velocity = velocity;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gametime)
         {
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
-
-            updateScale(gameTime);
+            Position += velocity * (gametime.ElapsedGameTime.Milliseconds / 1000f);
         }
 
         public void Draw(SpriteBatch batch)
         {
-
             if (Game1.Debug)
             {
                 Rectangle ObjectRect = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
@@ -56,16 +51,6 @@ namespace CornflowrCorban
             }
 
             batch.Draw(Image, Position, null, Color.White, 0, new Vector2(Image.Width / 2, Image.Height / 2), Scale, SpriteEffects.None, 0);
-        }
-
-        private void updateScale(GameTime gameTime)
-        {
-            //TODO: this needs to be tied to shooting
-            //shrink him
-            if(Scale > normalScale)
-            {
-                Scale -= .1f * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
-            }
         }
     }
 }
