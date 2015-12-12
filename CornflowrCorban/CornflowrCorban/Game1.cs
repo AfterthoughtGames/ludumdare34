@@ -130,6 +130,19 @@ namespace CornflowrCorban
                 l.Update(gameTime);
             }
 
+            for (int i = 0; i < lasers.Count;i++ )
+            {
+                if (lasers[i].Position.X < -500)
+                {
+                    lasers.RemoveAt(i);
+                }
+
+                if (lasers[i].Position.X > graphics.PreferredBackBufferWidth + 500)
+                {
+                    lasers.RemoveAt(i);
+                }
+            }
+
             Player.Update(gameTime);
             oldState = newState;
             // TODO: Add your update logic here
