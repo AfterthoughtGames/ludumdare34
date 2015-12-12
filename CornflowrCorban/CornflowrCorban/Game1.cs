@@ -18,12 +18,16 @@ namespace CornflowrCorban
 
         KeyboardState oldState;
 
-        static Texture2D Pixel;
+        bool debug = true;
+
+        public static Texture2D Pixel;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            
         }
 
         /// <summary>
@@ -50,6 +54,9 @@ namespace CornflowrCorban
             Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
             Background = RandomStaticStuff.GenerateBubuleField(GraphicsDevice, Content.Load<Texture2D>("Bubble"));
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+            Pixel.SetData<Color>(new Color[] { Color.White });
 
             // TODO: use this.Content to load your game content here
         }
@@ -112,37 +119,11 @@ namespace CornflowrCorban
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            int LineThickness = 3;
-            int RedValue = 255;
-            int BlueValue = 0;
-            int GreenValue = 0;
-
-
-            Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
-            Pixel.SetData<Color>(new Color[] { Color.White });
+            
             spriteBatch.Begin();
 
-            Rectangle ObjectRect = new Rectangle((int)Player.Position.X, (int)Player.Position.Y, Player.Image.Width, Player.Image.Height);
-
-            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.Left - LineThickness, ObjectRect.Y, LineThickness, ObjectRect.Height),
-                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255));//This is the line on the Left
-
-            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.Right, ObjectRect.Y, LineThickness, ObjectRect.Height),
-                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Right
-
-            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.X, ObjectRect.Top - LineThickness, ObjectRect.Width, LineThickness),
-                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Top
-
-            spriteBatch.Draw(Pixel, new Rectangle(ObjectRect.X, ObjectRect.Bottom, ObjectRect.Width, LineThickness),
-                new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Bottom
-
-
-
-            
-            spriteBatch.Draw(Player.Image, Player.Position, Color.White);
+            Player.Draw(spriteBatch, debug);
             spriteBatch.Draw(Background, new Vector2(10, 10), Color.White);
-
-            spriteBatch.Draw(Player.Image, Player.HitBox, Color.White);
 
             
             spriteBatch.End();
