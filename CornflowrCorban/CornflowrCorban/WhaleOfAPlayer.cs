@@ -28,6 +28,24 @@ namespace CornflowrCorban
             this.HitBox = new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
         }
 
+        public float Velocity
+        { 
+            get 
+            {
+                float speed = 7 * (2 - Scale);
+                if(speed < 0)
+                {
+                    speed = 0;
+                }
+
+                if(speed > 7)
+                {
+                    speed = 7;
+                }
+                return speed; 
+            } 
+        }
+
         public Laser Shoot(GameTime gameTime)
         {
             if (lastShot.AddMilliseconds(250) < DateTime.Now)
