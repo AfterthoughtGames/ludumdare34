@@ -131,6 +131,12 @@ namespace CornflowrCorban
                 Player.Position = new Vector2((Player.Position.X + Player.Velocity), Player.Position.Y);
             }
 
+            if (newState.IsKeyDown(Keys.F1) && !oldState.IsKeyDown(Keys.F1))
+            {
+                //debug toggle
+                Debug = !Debug;
+            }
+
             if (newState.IsKeyDown(Keys.Space))
             {
                 //shoot
