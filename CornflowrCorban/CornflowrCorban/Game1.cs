@@ -93,7 +93,8 @@ namespace CornflowrCorban
             createBubbles(100);
 
             Gen = new EnemyGen(GraphicsDevice,
-                new SimpleBadFish(Content.Load<Texture2D>("Enemy1"), Vector2.Zero,new Vector2(-100,0),1));
+                new SimpleBadFish(Content.Load<Texture2D>("Enemy1"), Vector2.Zero,new Vector2(-100,0),1),
+                new SimpleBadFish(Content.Load<Texture2D>("shark_0000_3"), Vector2.Zero, new Vector2(-100, 0), 1));
 
             // TODO: use this.Content to load your game content here
         }
