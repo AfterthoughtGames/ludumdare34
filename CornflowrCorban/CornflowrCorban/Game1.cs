@@ -25,7 +25,9 @@ namespace CornflowrCorban
         List<Bubble> topBubbles;
 
         int Score { get; set; }
-        
+
+        TimeSpan StartTime { get; set; }
+        TimeSpan currentTime { get; set; }
 
         Random rand = new Random(DateTime.Now.Millisecond);
 
@@ -61,7 +63,7 @@ namespace CornflowrCorban
             // TODO: Add your initialization logic here
 
             base.Initialize();
-
+            
             this.Window.Title = "Cornflower Corban - Violent Sol Team 12/2015";
 
             oldState = Keyboard.GetState();
@@ -112,6 +114,11 @@ namespace CornflowrCorban
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if(StartTime == null)
+            {
+                StartTime = gameTime.TotalGameTime;
+            }
+
             AdditionalVelocity = new Vector2(-1000 * (Player.Position.X / graphics.PreferredBackBufferWidth), 0);
 
             KeyboardState newState = Keyboard.GetState();
@@ -187,7 +194,7 @@ namespace CornflowrCorban
 
             Score += Gen.CleanUp();
 
-            //if(this.Window != null) this.Window.Title = Score.ToString();
+            currentTime = gameTime.TotalGameTime;
 
             base.Update(gameTime);
         }
@@ -228,6 +235,7 @@ namespace CornflowrCorban
 
             spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
             spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
+            spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.Red);
             spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
 
             spriteBatch.End();
