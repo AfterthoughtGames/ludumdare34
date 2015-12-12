@@ -49,19 +49,16 @@ namespace CornflowrCorban
         {
             if (Game1.Debug)
             {
-                Rectangle ObjectRect = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
-                    (int)Position.Y - (int)(Image.Height / 2 * Scale), (int)(Image.Width * Scale), (int)(Image.Height * Scale));
-
-                batch.Draw(Game1.Pixel, new Rectangle(ObjectRect.Left - LineThickness, ObjectRect.Y, LineThickness, ObjectRect.Height),
+                batch.Draw(Game1.Pixel, new Rectangle(HitBox.Left - LineThickness, HitBox.Y, LineThickness, HitBox.Height),
                     new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255));//This is the line on the Left
 
-                batch.Draw(Game1.Pixel, new Rectangle(ObjectRect.Right, ObjectRect.Y, LineThickness, ObjectRect.Height),
+                batch.Draw(Game1.Pixel, new Rectangle(HitBox.Right, HitBox.Y, LineThickness, HitBox.Height),
                     new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Right
 
-                batch.Draw(Game1.Pixel, new Rectangle(ObjectRect.X, ObjectRect.Top - LineThickness, ObjectRect.Width, LineThickness),
+                batch.Draw(Game1.Pixel, new Rectangle(HitBox.X, HitBox.Top - LineThickness, HitBox.Width, LineThickness),
                     new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Top
 
-                batch.Draw(Game1.Pixel, new Rectangle(ObjectRect.X, ObjectRect.Bottom, ObjectRect.Width, LineThickness),
+                batch.Draw(Game1.Pixel, new Rectangle(HitBox.X, HitBox.Bottom, HitBox.Width, LineThickness),
                     new Color((byte)RedValue, (byte)GreenValue, (byte)BlueValue, (byte)255)); //This is the line on the Bottom
 
             }

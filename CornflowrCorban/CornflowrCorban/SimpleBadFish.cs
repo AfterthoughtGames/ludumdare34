@@ -20,9 +20,10 @@ namespace CornflowrCorban
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+            HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 4 * Scale),
+                    (int)Position.Y - (int)(Image.Height /2.5f * Scale), (int)(Image.Width /3* Scale), (int)(Image.Height/1.2 * Scale));
 
-            Position = new Vector2(Position.X - 1, Position.Y);
+            Position = new Vector2(Position.X - 10, Position.Y);
         }
 
         public SimpleBadFish Clone()

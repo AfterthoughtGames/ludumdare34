@@ -93,7 +93,8 @@ namespace CornflowrCorban
             updateScale(gameTime);
             updatePosition();
 
-            base.Update(gameTime);
+            HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 2.5 * Scale),
+                    (int)Position.Y - (int)(Image.Height / 6f * Scale), (int)(Image.Width /1.2 * Scale), (int)(Image.Height / 3 * Scale));
         }
 
         private void updateScale(GameTime gameTime)
