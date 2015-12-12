@@ -34,7 +34,7 @@ namespace CornflowrCorban
         // enemy stuff
         EnemyGen Gen { get; set; }
 
-        public static bool Debug = true;
+        public static bool Debug = false;
         public static Texture2D Pixel;
         public static Texture2D LaserImage;
         public static Texture2D BubbleImage;
