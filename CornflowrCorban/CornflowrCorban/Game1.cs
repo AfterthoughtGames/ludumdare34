@@ -26,7 +26,10 @@ namespace CornflowrCorban
 
         Random rand = new Random(DateTime.Now.Millisecond);
 
-        public static bool Debug = false;
+        // enemy stuff
+        EnemyGen Gen { get; set; }
+
+        public static bool Debug = true;
         public static Texture2D Pixel;
         public static Texture2D LaserImage;
         public static Texture2D BubbleImage;
@@ -76,6 +79,9 @@ namespace CornflowrCorban
             bubbles = new List<Bubble>();
             topBubbles = new List<Bubble>();
             createBubbles(100);
+
+            Gen = new EnemyGen(GraphicsDevice,
+                new SimpleBadFish(Content.Load<Texture2D>("Enemy1"), Vector2.Zero));
 
             // TODO: use this.Content to load your game content here
         }
@@ -156,7 +162,8 @@ namespace CornflowrCorban
             Player.Update(gameTime);
             updateBubbles(gameTime);
             oldState = newState;
-            // TODO: Add your update logic here
+
+            Gen.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -186,7 +193,9 @@ namespace CornflowrCorban
 
             
 
-            Player.Draw(spriteBatch);
+            Player.Draw(gameTime, spriteBatch);
+            Gen.Draw(gameTime, spriteBatch);
+            
 
             foreach (Bubble b in topBubbles)
             {
