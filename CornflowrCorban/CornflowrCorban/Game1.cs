@@ -12,6 +12,7 @@ namespace CornflowrCorban
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        KeyboardState oldState;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -29,6 +30,8 @@ namespace CornflowrCorban
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            oldState = Keyboard.GetState();
         }
 
         /// <summary>
@@ -59,9 +62,32 @@ namespace CornflowrCorban
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            KeyboardState newState = Keyboard.GetState();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if(newState.IsKeyDown(Keys.W) && !oldState.IsKeyDown(Keys.W))
+            {
+                //do up
+            }
+
+            if (newState.IsKeyDown(Keys.S) && !oldState.IsKeyDown(Keys.S))
+            {
+                //do down
+            }
+
+            if (newState.IsKeyDown(Keys.A) && !oldState.IsKeyDown(Keys.A))
+            {
+                //do left
+            }
+
+            if (newState.IsKeyDown(Keys.D) && !oldState.IsKeyDown(Keys.D))
+            {
+                //do right
+            }
+
+            oldState = newState;
             // TODO: Add your update logic here
 
             base.Update(gameTime);
