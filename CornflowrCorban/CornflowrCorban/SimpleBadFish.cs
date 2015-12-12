@@ -9,7 +9,7 @@ namespace CornflowrCorban
 {
     public class SimpleBadFish : Entity
     {
-        public SimpleBadFish(Texture2D image, Vector2 startPOS)
+        public SimpleBadFish(Texture2D image, Vector2 startPOS) : base()
         {
             Image = image;
             Scale = 1;
