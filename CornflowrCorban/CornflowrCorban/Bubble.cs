@@ -22,9 +22,9 @@ namespace CornflowrCorban
             this.color = color;
         }
 
-        public void Update(GameTime gametime)
+        public override void Update(GameTime gametime)
         {
-            Position += Velocity * (gametime.ElapsedGameTime.Milliseconds / 1000f);
+            Position += (Velocity + Game1.AdditionalVelocity) * (gametime.ElapsedGameTime.Milliseconds / 1000f);
         }
 
         public void Draw(SpriteBatch batch)
