@@ -22,6 +22,7 @@ namespace CornflowrCorban
             this.Scale = 1;
             this.Position = new Microsoft.Xna.Framework.Vector2(100, 100);
             this.HitBox = new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
+            Health = 20;
         }
 
         private void updatePosition()

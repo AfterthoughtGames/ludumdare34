@@ -14,6 +14,7 @@ namespace CornflowrCorban
             Image = image;
             Scale = 1;
             Position = startPOS;
+            Health = 2;
         }
 
         public override void Update(GameTime gameTime)
