@@ -23,6 +23,8 @@ namespace CornflowrCorban
         List<Laser> lasers;
         List<Bubble> bubbles;
         List<Bubble> topBubbles;
+
+        int Score { get; set; }
         
 
         Random rand = new Random(DateTime.Now.Millisecond);
@@ -60,6 +62,8 @@ namespace CornflowrCorban
             base.Initialize();
 
             oldState = Keyboard.GetState();
+
+            Score = 0;
         }
 
         /// <summary>
@@ -177,6 +181,10 @@ namespace CornflowrCorban
 
             CollsionDetection();
 
+            Score += Gen.CleanUp();
+
+            if(this.Window != null) this.Window.Title = Score.ToString();
+
             base.Update(gameTime);
         }
 
@@ -281,9 +289,16 @@ namespace CornflowrCorban
                     if(currentEn.HitBox.Intersects(currentBeam.HitBox))
                     {
                          currentEn.Damage(currentBeam.DamageValue);
-                        currentBeam.Damage(1);
+                         currentBeam.Damage(1);
+                         if (currentBeam.PlayerShoot) Score += 1;
                     }
                 }
+            }
+
+            // clean up lasers might need to move
+            for(int laserIndex = 0; laserIndex < lasers.Count; laserIndex++)
+            {
+                if (lasers[laserIndex].Dead) lasers.RemoveAt(laserIndex);
             }
 
         }
