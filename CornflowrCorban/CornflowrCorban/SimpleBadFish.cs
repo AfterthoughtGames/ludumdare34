@@ -23,8 +23,17 @@ namespace CornflowrCorban
 
         public override void Update(GameTime gameTime)
         {
-            HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 4 * Scale),
-                    (int)Position.Y - (int)(Image.Height /2.5f * Scale), (int)(Image.Width /3* Scale), (int)(Image.Height/1.2 * Scale));
+            if (Image.Name == "Enemy1")
+            {
+                HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 4 * Scale),
+                        (int)Position.Y - (int)(Image.Height / 2.5f * Scale), (int)(Image.Width / 3 * Scale), (int)(Image.Height / 1.2 * Scale));
+
+            }
+            else
+            {
+                HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 4 * Scale),
+                       (int)Position.Y - (int)(Image.Height / 2.5f * Scale), (int)(Image.Width / 3 * Scale), (int)(Image.Height / 1.2 * Scale));
+            }
 
             Position += Velocity + Game1.AdditionalVelocity/200;
 

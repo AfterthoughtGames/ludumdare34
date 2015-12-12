@@ -15,13 +15,15 @@ namespace CornflowrCorban
         public List<Entity> EntityBag { get; set; }
 
         SimpleBadFish Fish1 { get; set; }
+        SimpleBadFish Shark1 { get; set; }
 
-        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf)
+        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark)
         {
             SpawnBox = new Rectangle(gd.Viewport.Width + 1, 0, gd.Viewport.Height, gd.Viewport.Height);
             POSVarance = new Random(DateTime.Now.Millisecond);
 
             Fish1 = bf;
+            Shark1 = shark;
         }
 
         public int CleanUp()
@@ -52,11 +54,23 @@ namespace CornflowrCorban
 
             if(EntityBag.Count < 5)
             {
-                //.Position = new Vector2(SpawnBox.Center.X, SpawnBox.Center.Y)
-                float scale = ((float)POSVarance.NextDouble());
-                if (scale < .25f) scale = .25f;
-                EntityBag.Add(Fish1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top+SpawnBox.Height)),
-                    new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)),scale));
+                if (POSVarance.NextDouble() > .25)
+                {
+                    //Jelly
+                    //.Position = new Vector2(SpawnBox.Center.X, SpawnBox.Center.Y)
+                    float scale = ((float)POSVarance.NextDouble());
+                    if (scale < .25f) scale = .25f;
+                    EntityBag.Add(Fish1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
+                        new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)), scale));
+                }
+                else
+                {
+                    //Shark
+                    float scale = ((float)POSVarance.NextDouble());
+                    if (scale < .5f) scale = .5f;
+                    EntityBag.Add(Shark1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
+                        new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)), scale));
+                }
             }
 
             foreach(Entity currentEnt in EntityBag)
