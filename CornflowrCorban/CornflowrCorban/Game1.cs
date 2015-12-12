@@ -94,25 +94,25 @@ namespace CornflowrCorban
             if (newState.IsKeyDown(Keys.W))
             {
                 //do up
-                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y - 15));
+                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y - Player.Velocity));
             }
 
             if (newState.IsKeyDown(Keys.S))
             {
                 //do down
-                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y + 15));
+                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y + Player.Velocity));
             }
 
             if (newState.IsKeyDown(Keys.A))
             {
                 //do left
-                Player.Position = new Vector2((Player.Position.X - 15), Player.Position.Y);
+                Player.Position = new Vector2((Player.Position.X - Player.Velocity), Player.Position.Y);
             }
 
             if (newState.IsKeyDown(Keys.D))
             {
                 //do right
-                Player.Position = new Vector2((Player.Position.X + 15), Player.Position.Y);
+                Player.Position = new Vector2((Player.Position.X + Player.Velocity), Player.Position.Y);
             }
 
             if (newState.IsKeyDown(Keys.Space))
