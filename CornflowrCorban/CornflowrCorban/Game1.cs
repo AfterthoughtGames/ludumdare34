@@ -18,13 +18,16 @@ namespace CornflowrCorban
 
         KeyboardState oldState;
 
-        bool debug = true;
+        public static bool Debug = true;
 
         public static Texture2D Pixel;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.ApplyChanges();
             Content.RootDirectory = "Content";
 
             
@@ -122,7 +125,7 @@ namespace CornflowrCorban
             
             spriteBatch.Begin();
 
-            Player.Draw(spriteBatch, debug);
+            Player.Draw(spriteBatch);
             spriteBatch.Draw(Background, new Vector2(10, 10), Color.White);
 
             
