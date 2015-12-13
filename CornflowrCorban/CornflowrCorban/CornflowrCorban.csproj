@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomStaticStuff.cs" />
     <Compile Include="SimpleBadFish.cs" />
+    <Compile Include="Title.cs" />
     <Compile Include="WhaleOfAPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +82,7 @@
     </Content>
     <None Include="Content\GUIFont.xnb" />
     <None Include="Content\shark_0000_3.xnb" />
+    <None Include="Content\Title.xnb" />
     <None Include="Content\water.xnb" />
     <None Include="Content\Whale.xnb" />
   </ItemGroup>
