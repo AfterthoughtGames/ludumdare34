@@ -40,6 +40,8 @@ namespace CornflowrCorban
         public static Texture2D Pixel;
         public static Texture2D LaserImage;
         public static Texture2D BubbleImage;
+        public static Texture2D BubbleImage2;
+        public static Texture2D BubbleImage3;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
 
@@ -81,6 +83,8 @@ namespace CornflowrCorban
         {
             LaserImage = Content.Load<Texture2D>("Laser");
             BubbleImage = Content.Load<Texture2D>("Bubble");
+            BubbleImage2 = Content.Load<Texture2D>("Bubble2");
+            BubbleImage3 = Content.Load<Texture2D>("Bubble3");
             Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
             GUIFont = Content.Load<SpriteFont>("GUIFont");
             Background = Content.Load<Texture2D>("water");
@@ -259,16 +263,51 @@ namespace CornflowrCorban
             int topTotal = total;
             while(total > 0)
             {
+                Texture2D image;
+                double number = rand.NextDouble();
+
+                if(number >.66)
+                {
+                    image = BubbleImage;
+                }
+                else if(number > .33)
+                {
+                    image = BubbleImage2;
+                }
+                else
+                {
+                    image = BubbleImage3;
+                }
+
+                
+
                 Bubble bubble = new Bubble(new Vector2(-graphics.PreferredBackBufferWidth + rand.Next(0, 2*graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
-                    (float)rand.NextDouble() / 3, BubbleImage, new Vector2(rand.Next(-200, -100), 0), new Color(100, 100, 100, 100));
+                    (float)rand.NextDouble() / 3, image, new Vector2(rand.Next(-200, -100), 0), new Color(100, 100, 100, 100));
                 bubbles.Add(bubble);
                 total--;
             }
 
             while (topTotal > 0)
             {
+                Texture2D image;
+                double number = rand.NextDouble();
+
+                if (number > .66)
+                {
+                    image = BubbleImage;
+                }
+                else if (number > .33)
+                {
+                    image = BubbleImage2;
+                }
+                else
+                {
+                    image = BubbleImage3;
+                }
+
+
                 Bubble bubble = new Bubble(new Vector2(-graphics.PreferredBackBufferWidth + rand.Next(0, 2*graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
-                    (float)rand.NextDouble() / 2, BubbleImage, new Vector2(rand.Next(-300,-200), 0),Color.White);
+                    (float)rand.NextDouble() / 2, image, new Vector2(rand.Next(-300,-200), 0),Color.White);
                 topBubbles.Add(bubble);
                 topTotal--;
             }
