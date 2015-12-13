@@ -53,8 +53,17 @@ namespace CornflowrCorban
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
 
+
         public static bool InMenu = true;
         public static bool StartNewGame = false;
+
+        public static Texture2D Jelly1;
+        public static Texture2D Jelly2;
+        public static Texture2D Jelly3;
+        public static Texture2D Jelly4;
+        public static Texture2D Jelly5;
+        public static Texture2D Jelly6;
+
 
         SoundEffect se;
 
@@ -96,6 +105,13 @@ namespace CornflowrCorban
         {
             se = Content.Load<SoundEffect>("wahwahlaser");
 
+            Jelly1 = Content.Load<Texture2D>("jellyfishAnimation_0000_tentacles-6");
+            Jelly2 = Content.Load<Texture2D>("jellyfishAnimation_0001_tentacles-5");
+            Jelly3 = Content.Load<Texture2D>("jellyfishAnimation_0002_tentacles-4");
+            Jelly4 = Content.Load<Texture2D>("jellyfishAnimation_0003_tentacles-3");
+            Jelly5 = Content.Load<Texture2D>("jellyfishAnimation_0004_tentacles-2");
+            Jelly6 = Content.Load<Texture2D>("jellyfishAnimation_0005_tentacles-1");
+
             ComicHit1 = Content.Load<Texture2D>("ComicPow");
             ComicHit2 = Content.Load<Texture2D>("ComicBam");
             ComicHit3 = Content.Load<Texture2D>("ComicZap");
@@ -118,9 +134,23 @@ namespace CornflowrCorban
             comicHits = new List<ComicHit>();
             createBubbles(100);
 
+
             topBubbles = new List<Bubble>();
             bubbles = new List<Bubble>();
             lasers = new List<Laser>();
+
+            List<Texture2D> jellyFrames = new List<Texture2D>();
+            jellyFrames.Add(Jelly1);
+            jellyFrames.Add(Jelly2);
+            jellyFrames.Add(Jelly3);
+            jellyFrames.Add(Jelly4);
+            jellyFrames.Add(Jelly5);
+            jellyFrames.Add(Jelly6);
+
+            Gen = new EnemyGen(GraphicsDevice,
+                new SimpleBadFish(jellyFrames, Vector2.Zero,new Vector2(-100,0),1,250),
+                new SimpleBadFish(Content.Load<Texture2D>("shark_0000_3"), Vector2.Zero, new Vector2(-100, 0), 1));
+
 
             // TODO: use this.Content to load your game content here
         }
