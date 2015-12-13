@@ -25,7 +25,7 @@ namespace CornflowrCorban
 
             this.velocity = velocity;
             Health = 1;
-            playerShoot = playerShoot;
+            PlayerShoot = playerShoot;
         }
 
         public override void Update(GameTime gameTime)
