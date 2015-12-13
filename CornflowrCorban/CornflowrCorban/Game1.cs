@@ -24,6 +24,7 @@ namespace CornflowrCorban
         List<Laser> lasers;
         List<Bubble> bubbles;
         List<Bubble> topBubbles;
+        List<ComicHit> comicHits;
 
         int Score { get; set; }
 
@@ -43,6 +44,7 @@ namespace CornflowrCorban
         public static Texture2D BubbleImage;
         public static Texture2D BubbleImage2;
         public static Texture2D BubbleImage3;
+        public static Texture2D ComicHit1;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
 
@@ -82,6 +84,8 @@ namespace CornflowrCorban
         /// </summary>
         protected override void LoadContent()
         {
+            ComicHit1 = Content.Load<Texture2D>("ComicPow");
+
             LaserImage = Content.Load<Texture2D>("Laser");
             BubbleImage = Content.Load<Texture2D>("Bubble");
             BubbleImage2 = Content.Load<Texture2D>("Bubble2");
@@ -97,6 +101,7 @@ namespace CornflowrCorban
             lasers = new List<Laser>();
             bubbles = new List<Bubble>();
             topBubbles = new List<Bubble>();
+            comicHits = new List<ComicHit>();
             createBubbles(100);
 
             Gen = new EnemyGen(GraphicsDevice,
@@ -205,6 +210,11 @@ namespace CornflowrCorban
 
             currentTime = gameTime.TotalGameTime;
 
+            foreach (ComicHit hit in comicHits)
+            {
+                hit.Update(gameTime);
+            }
+
             base.Update(gameTime);
         }
 
@@ -248,6 +258,11 @@ namespace CornflowrCorban
             foreach (Bubble b in topBubbles)
             {
                 b.Draw(spriteBatch);
+            }
+
+            foreach (ComicHit hit in comicHits)
+            {
+                hit.Draw(gameTime, spriteBatch);
             }
 
             spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
@@ -348,6 +363,7 @@ namespace CornflowrCorban
             {
                 if(Player.HitBox.Intersects(currentEn.HitBox) && currentEn.Dead == false)
                 {
+                    comicHits.Add(new ComicHit(150,new Vector2((currentEn.Position.X + Player.Position.X)/2f,(currentEn.Position.Y + Player.Position.Y)/2f)));
                     Player.Damage(1);
                     currentEn.Damage(currentEn.Health);
                 }
