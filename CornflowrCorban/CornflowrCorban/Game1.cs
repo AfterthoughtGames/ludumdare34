@@ -250,7 +250,7 @@ namespace CornflowrCorban
             while(total > 0)
             {
                 Bubble bubble = new Bubble(new Vector2(-graphics.PreferredBackBufferWidth + rand.Next(0, 2*graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
-                    (float)rand.NextDouble()/2, BubbleImage, new Vector2(-300, 0),new Color(100,100,100,100));
+                    (float)rand.NextDouble() / 3, BubbleImage, new Vector2(rand.Next(-200, -100), 0), new Color(100, 100, 100, 100));
                 bubbles.Add(bubble);
                 total--;
             }
@@ -258,7 +258,7 @@ namespace CornflowrCorban
             while (topTotal > 0)
             {
                 Bubble bubble = new Bubble(new Vector2(-graphics.PreferredBackBufferWidth + rand.Next(0, 2*graphics.PreferredBackBufferWidth), rand.Next(0, graphics.PreferredBackBufferHeight)),
-                    (float)rand.NextDouble() / 2, BubbleImage, new Vector2(-300, 0),Color.White);
+                    (float)rand.NextDouble() / 2, BubbleImage, new Vector2(rand.Next(-300,-200), 0),Color.White);
                 topBubbles.Add(bubble);
                 topTotal--;
             }
