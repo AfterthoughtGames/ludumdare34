@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bubble.cs" />
+    <Compile Include="ComicHit.cs" />
     <Compile Include="EnemyGen.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Game1.cs" />
@@ -75,6 +76,7 @@
     <None Include="Content\Bubble.xnb" />
     <None Include="Content\Bubble2.xnb" />
     <None Include="Content\Bubble3.xnb" />
+    <None Include="Content\ComicPow.xnb" />
     <None Include="Content\Enemy1.xnb" />
     <Content Include="Content\Laser.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
