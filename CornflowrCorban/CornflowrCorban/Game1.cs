@@ -19,6 +19,7 @@ namespace CornflowrCorban
         Texture2D Background { get; set; }
 
         KeyboardState oldState;
+        GamePadState oldStatePad;
 
         List<Laser> lasers;
         List<Bubble> bubbles;
@@ -127,37 +128,37 @@ namespace CornflowrCorban
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (newState.IsKeyDown(Keys.W))
+            if (newState.IsKeyDown(Keys.W) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y > 0)
             {
                 //do up
                 Player.Position = new Vector2(Player.Position.X, (Player.Position.Y - Player.Velocity));
             }
 
-            if (newState.IsKeyDown(Keys.S))
+            if (newState.IsKeyDown(Keys.S) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y < 0)
             {
                 //do down
                 Player.Position = new Vector2(Player.Position.X, (Player.Position.Y + Player.Velocity));
             }
 
-            if (newState.IsKeyDown(Keys.A))
+            if (newState.IsKeyDown(Keys.A) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X < 0)
             {
                 //do left
                 Player.Position = new Vector2((Player.Position.X - Player.Velocity), Player.Position.Y);
             }
 
-            if (newState.IsKeyDown(Keys.D))
+            if (newState.IsKeyDown(Keys.D) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X > 0)
             {
                 //do right
                 Player.Position = new Vector2((Player.Position.X + Player.Velocity), Player.Position.Y);
             }
 
-            if (newState.IsKeyDown(Keys.F1) && !oldState.IsKeyDown(Keys.F1))
+            if ((newState.IsKeyDown(Keys.F1) && !oldState.IsKeyDown(Keys.F1)) || (GamePad.GetState(PlayerIndex.One).Buttons.RightStick == ButtonState.Pressed && oldStatePad.Buttons.RightStick == ButtonState.Released))
             {
                 //debug toggle
                 Debug = !Debug;
             }
 
-            if (newState.IsKeyDown(Keys.Space))
+            if (newState.IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
             {
                 //shoot
                 Laser laser = Player.Shoot(gameTime);
@@ -188,6 +189,7 @@ namespace CornflowrCorban
             Player.Update(gameTime);
             updateBubbles(gameTime);
             oldState = newState;
+            oldStatePad = GamePad.GetState(PlayerIndex.One);
 
             Gen.Update(gameTime);
 
