@@ -215,7 +215,7 @@ namespace CornflowrCorban
 
                 KeyboardState newState = Keyboard.GetState();
 
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape) || (Joystick.GetState(1).Buttons[2] == ButtonState.Pressed))
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                     InMenu = true;//Exit();
 
                 if (newState.IsKeyDown(Keys.W) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y > 0)
