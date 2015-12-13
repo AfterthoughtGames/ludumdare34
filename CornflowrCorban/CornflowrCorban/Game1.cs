@@ -52,6 +52,8 @@ namespace CornflowrCorban
         public static Texture2D ComicHit1;
         public static Texture2D ComicHit2;
         public static Texture2D ComicHit3;
+
+        public static Texture2D ComicKrill;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
 
@@ -143,6 +145,8 @@ namespace CornflowrCorban
             ComicHit1 = Content.Load<Texture2D>("ComicPow");
             ComicHit2 = Content.Load<Texture2D>("ComicBam");
             ComicHit3 = Content.Load<Texture2D>("ComicZap");
+
+            ComicKrill = Content.Load<Texture2D>("ComicKrill");
 
             LaserImage = Content.Load<Texture2D>("Laser");
             LaserImage2 = Content.Load<Texture2D>("Laser2");
@@ -496,6 +500,17 @@ namespace CornflowrCorban
                 }
             }
 
+            foreach (Pickup p in Gen.Pickups)
+            {
+                //shark shot it
+                if (Player.HitBox.Intersects(p.HitBox))
+                {
+                    comicHits.Add(new ComicHit(150, new Vector2((p.Position.X + Player.Position.X) / 2f, (p.Position.Y + Player.Position.Y) / 2f),ComicKrill));
+                    Score += p.Score;
+                    p.Damage(p.Health);
+                }
+            }
+
             // clean up lasers might need to move
             for(int laserIndex = 0; laserIndex < lasers.Count; laserIndex++)
             {
@@ -542,7 +557,8 @@ namespace CornflowrCorban
             Gen = new EnemyGen(GraphicsDevice,
                 new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1, 250,this),
                 new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,this),
-                new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,this));
+                new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,this),
+                new Pickup(Vector2.Zero,1,Content.Load<Texture2D>("Krill"),new Vector2(-500,0),5));
 
             StartNewGame = false;
         }

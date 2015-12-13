@@ -13,12 +13,17 @@ namespace CornflowrCorban
         Random POSVarance { get; set; }
 
         public List<Entity> EntityBag { get; set; }
+        public List<Pickup> Pickups { get; set; }
 
         SimpleBadFish Fish1 { get; set; }
         SimpleBadFish Shark1 { get; set; }
         SimpleBadFish LaserShark { get; set; }
+        Pickup Krill { get; set; }
 
-        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark)
+        DateTime lastPickup = DateTime.Now;
+        int pickupDelay = 20000;
+
+        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill)
         {
             SpawnBox = new Rectangle(gd.Viewport.Width + 1, 0, gd.Viewport.Height, gd.Viewport.Height);
             POSVarance = new Random(DateTime.Now.Millisecond);
@@ -26,6 +31,9 @@ namespace CornflowrCorban
             Fish1 = bf;
             Shark1 = shark;
             LaserShark = laserShark;
+            Krill = krill;
+
+            Pickups = new List<Pickup>();
         }
 
         public int CleanUp()
@@ -52,12 +60,35 @@ namespace CornflowrCorban
                 }
             }
 
-            return finalPointValue;
+            for (int i = 0; i < Pickups.Count;i++ )
+            {
+                if(Pickups[i].Dead)
+                {
+                    Pickups.RemoveAt(i);
+                }
+
+                if(Pickups.Count > i && Pickups[i].Position.X < -50)
+                {
+                    Pickups.RemoveAt(i);
+                }
+            }
+
+                return finalPointValue;
         }
 
         public void Update(GameTime gameTime)
         {
             if (EntityBag == null) EntityBag = new List<Entity>();
+
+            if(lastPickup.AddMilliseconds(pickupDelay) < DateTime.Now && Pickups.Count < 1)
+            {
+                //drop a pickup of Krill
+                float scale = ((float)POSVarance.NextDouble()/2);
+                    if (scale < .25f) scale = .25f;
+                    Pickups.Add(Krill.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
+                       scale, Krill.Image, new Vector2(POSVarance.Next(-1000, -500), POSVarance.Next(-3, 3))));
+                    lastPickup = DateTime.Now;
+            }
 
             if(EntityBag.Count < 5)
             {
@@ -92,6 +123,11 @@ namespace CornflowrCorban
             {
                 currentEnt.Update(gameTime);
             }
+
+            foreach (Pickup p in Pickups)
+            {
+                p.Update(gameTime);
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch sb)
@@ -100,6 +136,12 @@ namespace CornflowrCorban
             {
                 currentEnt.Draw(gameTime, sb);
             }
+
+            foreach(Pickup p in Pickups)
+            {
+                p.Draw(gameTime, sb);
+            }
+
         }
     }
 }

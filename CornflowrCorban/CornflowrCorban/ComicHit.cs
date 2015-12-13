@@ -16,7 +16,7 @@ namespace CornflowrCorban
         float maxRotation;
         float rotation;
 
-        public ComicHit(float life, Vector2 position)
+        public ComicHit(float life, Vector2 position, Texture2D image = null)
         {
             Life = life;
             startingLife = life;
@@ -26,17 +26,24 @@ namespace CornflowrCorban
             Position = position;
 
             double nbr = rand.NextDouble();
-            if(nbr < .3)
+            if (image == null)
             {
-                Image = Game1.ComicHit1;
-            }
-            else if(nbr < .6)
-            {
-                Image = Game1.ComicHit2;
+                if (nbr < .3)
+                {
+                    Image = Game1.ComicHit1;
+                }
+                else if (nbr < .6)
+                {
+                    Image = Game1.ComicHit2;
+                }
+                else
+                {
+                    Image = Game1.ComicHit3;
+                }
             }
             else
             {
-                Image = Game1.ComicHit3;
+                Image = image;
             }
             
             
