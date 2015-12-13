@@ -294,7 +294,7 @@ namespace CornflowrCorban
                 if (Player.Dead) //bloopbloop
                 {
                     BloopSound.Play();
-                    SaveScore();
+                    ScoreSystem.SaveScore(Score);
                     InMenu = true;
                 }
 
@@ -588,29 +588,6 @@ namespace CornflowrCorban
             StartNewGame = false;
         }
 
-        private void SaveScore()
-        {
-            if (File.Exists(Directory.GetCurrentDirectory() + "\\score.txt")) File.Delete(Directory.GetCurrentDirectory() + "\\score.txt");
-            System.IO.File.WriteAllText(Directory.GetCurrentDirectory() + "\\score.txt", Score.ToString(), System.Text.Encoding.ASCII);
-        }
-
-        public static int ReadScore()
-        {
-            if (File.Exists(Directory.GetCurrentDirectory() + "\\score.txt"))
-            {
-                String line = string.Empty;
-
-                using (StreamReader sr = new StreamReader(Directory.GetCurrentDirectory() + "\\score.txt"))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    line = sr.ReadToEnd();
-                    Console.WriteLine(line);
-                }
-
-                return Convert.ToInt32(line);
-            }
-
-            return 0;
-        }
+       
     }
 }
