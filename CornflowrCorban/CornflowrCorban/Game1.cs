@@ -228,7 +228,7 @@ namespace CornflowrCorban
                     if (laser != null)
                     {
                         lasers.Add(laser);
-                        LaserSound.Play();
+                        LaserSound.Play(0.1f, 0f, 0f);
                     }
                 }
 
