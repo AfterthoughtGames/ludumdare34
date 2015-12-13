@@ -31,8 +31,8 @@ namespace CornflowrCorban
             }
             else
             {
-                HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 4 * Scale),
-                       (int)Position.Y - (int)(Image.Height / 2.5f * Scale), (int)(Image.Width / 3 * Scale), (int)(Image.Height / 1.2 * Scale));
+                HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
+                       (int)Position.Y - (int)(Image.Height / 4.5f * Scale), (int)(Image.Width / 1.5 * Scale), (int)(Image.Height / 4 * Scale));
             }
 
             Position += Velocity + Game1.AdditionalVelocity/200;

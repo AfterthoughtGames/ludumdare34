@@ -82,6 +82,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Content\GUIFont.xnb" />
+    <Content Include="Content\jellyfishAnimation_0000_tentacles-6.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jellyfishAnimation_0001_tentacles-5.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jellyfishAnimation_0002_tentacles-4.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jellyfishAnimation_0003_tentacles-3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jellyfishAnimation_0004_tentacles-2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jellyfishAnimation_0005_tentacles-1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\shark_0000_3.xnb" />
     <None Include="Content\Title.xnb" />
     <None Include="Content\water.xnb" />
