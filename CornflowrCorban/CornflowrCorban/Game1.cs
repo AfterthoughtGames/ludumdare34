@@ -63,6 +63,10 @@ namespace CornflowrCorban
         public static Texture2D Shark2;
         public static Texture2D Shark3;
 
+        public static Texture2D LaserShark1;
+        public static Texture2D LaserShark2;
+        public static Texture2D LaserShark3;
+
         public static Texture2D Jelly1;
         public static Texture2D Jelly2;
         public static Texture2D Jelly3;
@@ -122,6 +126,10 @@ namespace CornflowrCorban
             Shark1 = Content.Load<Texture2D>("shark_0000_3");
             Shark2 = Content.Load<Texture2D>("shark_0001_2");
             Shark3 = Content.Load<Texture2D>("shark_0002_1");
+
+            LaserShark3 = Content.Load<Texture2D>("laserShark3");
+            LaserShark2 = Content.Load<Texture2D>("laserShark2");
+            LaserShark1 = Content.Load<Texture2D>("laserShark1");
 
             ComicHit1 = Content.Load<Texture2D>("ComicPow");
             ComicHit2 = Content.Load<Texture2D>("ComicBam");
@@ -496,9 +504,15 @@ namespace CornflowrCorban
             sharkFrames.Add(Shark2);
             sharkFrames.Add(Shark3);
 
+            List<Texture2D> laserSharkFrames = new List<Texture2D>();
+            laserSharkFrames.Add(LaserShark1);
+            laserSharkFrames.Add(LaserShark2);
+            laserSharkFrames.Add(LaserShark3);
+
             Gen = new EnemyGen(GraphicsDevice,
                 new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1, 250),
-                new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250));
+                new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250),
+                new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250));
 
             StartNewGame = false;
         }
