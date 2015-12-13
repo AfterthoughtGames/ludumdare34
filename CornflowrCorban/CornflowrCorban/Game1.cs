@@ -582,6 +582,9 @@ namespace CornflowrCorban
                 new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,4,this),
                 new Pickup(Vector2.Zero,1,Content.Load<Texture2D>("Krill"),new Vector2(-500,0),5));
 
+            comicHits = new List<ComicHit>();
+
+
             StartNewGame = false;
         }
 
