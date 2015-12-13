@@ -26,6 +26,8 @@ namespace CornflowrCorban
 
         int Score { get; set; }
 
+        private Vector2 backgroundParallax;
+
         TimeSpan StartTime { get; set; }
         TimeSpan currentTime { get; set; }
 
@@ -48,7 +50,7 @@ namespace CornflowrCorban
             graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
             Content.RootDirectory = "Content";
-
+            backgroundParallax = new Vector2(0,0);
             
         }
 
@@ -81,7 +83,7 @@ namespace CornflowrCorban
             BubbleImage = Content.Load<Texture2D>("Bubble");
             Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
             GUIFont = Content.Load<SpriteFont>("GUIFont");
-            Background = RandomStaticStuff.GenerateBubuleField(GraphicsDevice, Content.Load<Texture2D>("Bubble"));
+            Background = Content.Load<Texture2D>("water");
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
@@ -207,11 +209,19 @@ namespace CornflowrCorban
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            backgroundParallax += new Vector2(-50, -19) * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+                spriteBatch.Draw(Background,Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+                //spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width + (int)backgroundParallax.X, GraphicsDevice.Viewport.Height), new Color(255,255,255,.15f), 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+                //spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.DarkGreen);
+            spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X*4, (int)backgroundParallax.Y, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), new Color(.5f,.5f,5f,.25f));
+            spriteBatch.End();
             
             spriteBatch.Begin();
-
-            
-            spriteBatch.Draw(Background, new Vector2(10, 10), Color.White);
 
             foreach (Bubble b in bubbles)
             {
