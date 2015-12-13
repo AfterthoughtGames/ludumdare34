@@ -61,7 +61,7 @@ namespace CornflowrCorban
                     float scale = ((float)POSVarance.NextDouble());
                     if (scale < .25f) scale = .25f;
                     EntityBag.Add(Fish1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
-                        new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)), scale));
+                        new Vector2(POSVarance.Next(-10, -5), POSVarance.Next(-3, 3)), scale));
                 }
                 else
                 {
