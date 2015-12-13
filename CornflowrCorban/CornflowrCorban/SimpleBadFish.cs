@@ -19,13 +19,13 @@ namespace CornflowrCorban
         DateTime lastShot = DateTime.Now;
         Game1 gameRef;
 
-        public SimpleBadFish(Texture2D image, Vector2 startPOS, Vector2 velocity, float scale, Game1 game) : base()
+        public SimpleBadFish(Texture2D image, Vector2 startPOS, Vector2 velocity, float scale, int pointValue, Game1 game) : base()
         {
             Image = image;
             Scale = scale;
             Position = startPOS;
             Health = 2;
-            PointValue = 2;
+            PointValue = pointValue;
             Velocity = velocity;
 
             frames = new List<Texture2D>();
@@ -33,7 +33,7 @@ namespace CornflowrCorban
             gameRef = game;
         }
 
-        public SimpleBadFish(List<Texture2D> images, Vector2 startPOS, Vector2 velocity, float scale, int frameDelay, Game1 game)
+        public SimpleBadFish(List<Texture2D> images, Vector2 startPOS, Vector2 velocity, float scale, int frameDelay, int pointValue, Game1 game)
             : base()
         {
             //Image = image;
@@ -43,6 +43,7 @@ namespace CornflowrCorban
             PointValue = 2;
             Velocity = velocity;
             gameRef = game;
+            PointValue = pointValue;
 
             frames = images;
             this.frameDelay = frameDelay;
@@ -101,12 +102,12 @@ namespace CornflowrCorban
 
         public SimpleBadFish Clone()
         {
-            return new SimpleBadFish(this.frames, this.Position, this.Velocity, this.Scale, this.frameDelay, this.gameRef);
+            return new SimpleBadFish(this.frames, this.Position, this.Velocity, this.Scale, this.frameDelay, this.PointValue, this.gameRef);
         }
 
         public SimpleBadFish Clone(Vector2 pos, Vector2 velocity, float scale)
         {
-            SimpleBadFish tempFish = new SimpleBadFish(this.frames, this.Position, velocity, scale, this.frameDelay, this.gameRef);
+            SimpleBadFish tempFish = new SimpleBadFish(this.frames, this.Position, velocity, scale, this.frameDelay, this.PointValue, this.gameRef);
             tempFish.Position = pos;
             return tempFish;
         }
