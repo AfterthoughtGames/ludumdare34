@@ -30,7 +30,7 @@ namespace CornflowrCorban
 
         Title TitleScreen;
 
-        int Score { get; set; }
+        public static int Score { get; set; }
 
         private Vector2 backgroundParallax;
 
@@ -577,9 +577,9 @@ namespace CornflowrCorban
             laserSharkFrames.Add(LaserShark3);
 
             Gen = new EnemyGen(GraphicsDevice,
-                new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1, 250,this),
-                new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,this),
-                new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,this),
+                new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1f, 250,1,this),
+                new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,2,this),
+                new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,4,this),
                 new Pickup(Vector2.Zero,1,Content.Load<Texture2D>("Krill"),new Vector2(-500,0),5));
 
             StartNewGame = false;
