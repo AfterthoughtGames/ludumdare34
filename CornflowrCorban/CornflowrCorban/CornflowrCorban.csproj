@@ -102,6 +102,7 @@
     </Content>
     <None Include="Content\shark_0000_3.xnb" />
     <None Include="Content\Title.xnb" />
+    <None Include="Content\wahwahlaser.xnb" />
     <None Include="Content\water.xnb" />
     <None Include="Content\Whale.xnb" />
   </ItemGroup>
