@@ -74,6 +74,11 @@ namespace CornflowrCorban
                         (int)Position.Y - (int)(Image.Height / 2.5f * Scale), (int)(Image.Width / 3 * Scale), (int)(Image.Height / 1.2 * Scale));
 
             }
+            else if (Image.Name.Contains("octo"))
+            {
+                HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
+                       (int)Position.Y - (int)(Image.Height / 2f * Scale), (int)(Image.Width / 1.5 * Scale), (int)(Image.Height / 1.75 * Scale));
+            }
             else
             {
                 if (Image.Name.Contains("laser"))

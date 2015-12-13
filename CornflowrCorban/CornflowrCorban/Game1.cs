@@ -66,6 +66,9 @@ namespace CornflowrCorban
         public static Texture2D Shark2;
         public static Texture2D Shark3;
 
+        public static Texture2D Octo1;
+        public static Texture2D Octo2;
+
         public static Texture2D LaserShark1;
         public static Texture2D LaserShark2;
         public static Texture2D LaserShark3;
@@ -133,6 +136,9 @@ namespace CornflowrCorban
             Jelly4 = Content.Load<Texture2D>("jellyfishAnimation_0003_tentacles-3");
             Jelly5 = Content.Load<Texture2D>("jellyfishAnimation_0004_tentacles-2");
             Jelly6 = Content.Load<Texture2D>("jellyfishAnimation_0005_tentacles-1");
+
+            Octo1 = Content.Load<Texture2D>("octopusAnimation_0001_2");
+            Octo2 = Content.Load<Texture2D>("octopusAnimation_0002_1");
 
             Shark1 = Content.Load<Texture2D>("shark_0000_3");
             Shark2 = Content.Load<Texture2D>("shark_0001_2");
@@ -577,11 +583,16 @@ namespace CornflowrCorban
             laserSharkFrames.Add(LaserShark2);
             laserSharkFrames.Add(LaserShark3);
 
+            List<Texture2D> octoFrames = new List<Texture2D>();
+            octoFrames.Add(Octo1);
+            octoFrames.Add(Octo2);
+
             Gen = new EnemyGen(GraphicsDevice,
                 new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1f, 250,1,this),
                 new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,2,this),
                 new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,4,this),
-                new Pickup(Vector2.Zero,1,Content.Load<Texture2D>("Krill"),new Vector2(-500,0),5));
+                new Pickup(Vector2.Zero,1,Content.Load<Texture2D>("Krill"),new Vector2(-500,0),5),
+                new SimpleBadFish(octoFrames, Vector2.Zero, new Vector2(-50, 0), 1, 250, 4, this));
 
             comicHits = new List<ComicHit>();
 

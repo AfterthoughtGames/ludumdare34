@@ -19,6 +19,7 @@ namespace CornflowrCorban
         SimpleBadFish Fish1 { get; set; }
         SimpleBadFish Shark1 { get; set; }
         SimpleBadFish LaserShark { get; set; }
+        SimpleBadFish Octo { get; set; }
         Pickup Krill { get; set; }
 
         DateTime lastPickup = DateTime.Now;
@@ -33,7 +34,7 @@ namespace CornflowrCorban
         DateTime lastDifficultyUpgrade = DateTime.Now;
         int difficultyDelay = 10000;
 
-        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill)
+        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill, SimpleBadFish octo)
         {
             SpawnBox = new Rectangle(gd.Viewport.Width + 1, 0, gd.Viewport.Height, gd.Viewport.Height);
             POSVarance = new Random(DateTime.Now.Millisecond);
@@ -46,6 +47,8 @@ namespace CornflowrCorban
             LaserShark.PointValue = 10;
             Krill = krill;
             Krill.PointValue = 15;
+            Octo = octo;
+            octo.PointValue = 8;
 
             Pickups = new List<Pickup>();
             EventEntities = new List<Entity>();
@@ -174,6 +177,14 @@ namespace CornflowrCorban
                     if (scale < .5f) scale = .5f;
                     EntityBag.Add(Shark1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
                         new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)), scale));
+                }
+                else if (POSVarance.NextDouble() > .33)
+                {
+                    //Octo
+                    float scale = ((float)POSVarance.NextDouble());
+                    if (scale < .5f) scale = .5f;
+                    EntityBag.Add(Octo.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
+                        new Vector2(POSVarance.Next(-10, -10), POSVarance.Next(-3, 3)), scale));
                 }
                 else
                 {

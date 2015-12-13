@@ -122,6 +122,8 @@
     <None Include="Content\laserShark1.xnb" />
     <None Include="Content\laserShark2.xnb" />
     <None Include="Content\laserShark3.xnb" />
+    <None Include="Content\octopusAnimation_0001_2.xnb" />
+    <None Include="Content\octopusAnimation_0002_1.xnb" />
     <None Include="Content\Title.xnb" />
     <None Include="Content\wahwahlaser.xnb" />
     <None Include="Content\water.xnb" />
