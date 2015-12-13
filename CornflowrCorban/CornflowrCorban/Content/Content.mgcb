@@ -223,3 +223,9 @@
 /processorParam:Quality=Best
 /build:wahwahlaser.wav
 
+#begin bloopbloop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:bloopbloop.wav
+

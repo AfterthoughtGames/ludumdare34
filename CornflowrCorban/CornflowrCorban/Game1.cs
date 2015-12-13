@@ -66,8 +66,8 @@ namespace CornflowrCorban
         public static Texture2D Jelly5;
         public static Texture2D Jelly6;
 
-
-        SoundEffect se;
+        public static SoundEffect LaserSound;
+        public static SoundEffect BloopSound;
 
         public Game1()
         {
@@ -105,7 +105,8 @@ namespace CornflowrCorban
         /// </summary>
         protected override void LoadContent()
         {
-            se = Content.Load<SoundEffect>("wahwahlaser");
+            LaserSound = Content.Load<SoundEffect>("wahwahlaser");
+            BloopSound = Content.Load<SoundEffect>("bloopbloop");
 
             Jelly1 = Content.Load<Texture2D>("jellyfishAnimation_0000_tentacles-6");
             Jelly2 = Content.Load<Texture2D>("jellyfishAnimation_0001_tentacles-5");
@@ -227,7 +228,7 @@ namespace CornflowrCorban
                     if (laser != null)
                     {
                         lasers.Add(laser);
-                        se.Play();
+                        LaserSound.Play();
                     }
                 }
 
@@ -262,8 +263,9 @@ namespace CornflowrCorban
 
                 currentTime = gameTime.TotalGameTime;
 
-                if (Player.Dead)
+                if (Player.Dead) //bloopbloop
                 {
+                    BloopSound.Play();
                     SaveScore();
                     InMenu = true;
                 }

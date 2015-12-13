@@ -32,8 +32,12 @@ namespace CornflowrCorban
 
             for(int entIndex = 0; entIndex < EntityBag.Count; entIndex++)
             {
-                if(EntityBag[entIndex].Dead)
+                if (EntityBag[entIndex].Dead) //bloopbloop
                 {
+                    if (!EntityBag[entIndex].QuietDeath)
+                    {
+                        Game1.BloopSound.Play();
+                    }
                     finalPointValue += EntityBag[entIndex].PointValue;
                     EntityBag.RemoveAt(entIndex);
                     return 0;
@@ -41,7 +45,8 @@ namespace CornflowrCorban
 
                 if(EntityBag[entIndex].Position.X < -100)
                 {
-                    EntityBag.RemoveAt(entIndex);
+                    //EntityBag.RemoveAt(entIndex);
+                    EntityBag[entIndex].DieQuietly();
                 }
             }
 

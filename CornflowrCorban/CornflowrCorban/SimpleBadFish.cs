@@ -75,11 +75,13 @@ namespace CornflowrCorban
             }
 
             Position += Velocity + Game1.AdditionalVelocity/200;
-
+            /*
             if(Position.X < -100)
             {
                 Dead = true;
             }
+            */
+            
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch batch)

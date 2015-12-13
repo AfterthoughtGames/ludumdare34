@@ -20,6 +20,8 @@ namespace CornflowrCorban
 
         public List<Point> AIPath { get; set; }
 
+        public bool QuietDeath { get; set; }
+
         int RedValue = 255;
         int BlueValue = 0;
         int GreenValue = 0;
@@ -28,6 +30,7 @@ namespace CornflowrCorban
         public Entity()
         {
             Dead = false;
+            QuietDeath = false;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -65,6 +68,13 @@ namespace CornflowrCorban
 
             if(Dead == false)
             batch.Draw(Image, Position, null, Color.White, 0, new Vector2(Image.Width / 2, Image.Height / 2), Scale, SpriteEffects.None, 0);
+        }
+
+        public void DieQuietly()
+        {
+            //ssshhhhhhhhhhhhhhhhhh
+            QuietDeath = true;
+            Dead = true;
         }
     }
 }
