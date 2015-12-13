@@ -81,6 +81,8 @@ namespace CornflowrCorban
         public static Texture2D Jelly5;
         public static Texture2D Jelly6;
 
+        public static Texture2D Fish;
+
         public static SoundEffect LaserSound;
         public static SoundEffect BloopSound;
 
@@ -120,6 +122,8 @@ namespace CornflowrCorban
         /// </summary>
         protected override void LoadContent()
         {
+            Fish = Content.Load<Texture2D>("FishSchool");
+
             LaserSound = Content.Load<SoundEffect>("wahwahlaser");
             BloopSound = Content.Load<SoundEffect>("bloopbloop");
 
@@ -200,14 +204,8 @@ namespace CornflowrCorban
             {
                 TitleScreen.Update(gameTime);
             }
-            else
+            else if(Gen != null)
             {
-                // Start a new game
-                if(StartNewGame)
-                {
-                    NewGame(gameTime);
-                }
-
                 if (StartTime == null)
                 {
                     StartTime = gameTime.TotalGameTime;
@@ -299,13 +297,28 @@ namespace CornflowrCorban
                     SaveScore();
                     InMenu = true;
                 }
+
+                foreach (ComicHit hit in comicHits)
+                {
+                    hit.Update(gameTime);
+                }
+
+                foreach (Entity e in Gen.EventEntities)
+                {
+                    e.Update(gameTime);
+                }
             }
-
-
-            foreach (ComicHit hit in comicHits)
+            else
             {
-                hit.Update(gameTime);
+                // Start a new game
+                if (StartNewGame)
+                {
+                    NewGame(gameTime);
+                }
             }
+
+
+            
 
             base.Update(gameTime);
         }
@@ -323,7 +336,7 @@ namespace CornflowrCorban
                 TitleScreen.Draw(gameTime, spriteBatch);
                 spriteBatch.End();
             }
-            else
+            else if (Gen != null)
             {
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 backgroundParallax += new Vector2(-50, -19) * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
@@ -353,6 +366,10 @@ namespace CornflowrCorban
                 if (Player != null) Player.Draw(gameTime, spriteBatch);
                 if (Player != null) Gen.Draw(gameTime, spriteBatch);
 
+                foreach (Entity e in Gen.EventEntities)
+                {
+                    e.Draw(gameTime, spriteBatch);
+                }
 
                 foreach (Bubble b in topBubbles)
                 {
@@ -521,6 +538,11 @@ namespace CornflowrCorban
 
         private void NewGame(GameTime gameTime)
         {
+            if(Player != null)
+            {
+                Player.Dead = false;
+                Player.Health = 10;
+            }
             Score = 0;
             List<Texture2D> whaleFrames = new List<Texture2D>();
             whaleFrames.Add(Whale1);

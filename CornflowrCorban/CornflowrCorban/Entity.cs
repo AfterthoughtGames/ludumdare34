@@ -15,6 +15,7 @@ namespace CornflowrCorban
         public Vector2 Position { get; set; }
         public int Health { get; set; }
         public int PointValue { get; set; }
+        public Vector2 Velocity { get; set; }
 
         public Rectangle HitBox { get; set; }
 
@@ -35,6 +36,11 @@ namespace CornflowrCorban
 
         public virtual void Update(GameTime gameTime)
         {
+            if(Velocity != null)
+            {
+                Position += Velocity * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            }
+
             HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
                     (int)Position.Y - (int)(Image.Height / 2 * Scale), (int)(Image.Width * Scale), (int)(Image.Height * Scale));
         }

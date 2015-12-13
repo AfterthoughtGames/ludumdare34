@@ -14,6 +14,7 @@ namespace CornflowrCorban
 
         public List<Entity> EntityBag { get; set; }
         public List<Pickup> Pickups { get; set; }
+        public List<Entity> EventEntities { get; set; }
 
         SimpleBadFish Fish1 { get; set; }
         SimpleBadFish Shark1 { get; set; }
@@ -22,6 +23,11 @@ namespace CornflowrCorban
 
         DateTime lastPickup = DateTime.Now;
         int pickupDelay = 20000;
+
+        DateTime lastEvent = DateTime.Now;
+        DateTime lastEventSpawn = DateTime.Now;
+        int eventDelay;
+        int eventDuration;
 
         public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill)
         {
@@ -34,6 +40,12 @@ namespace CornflowrCorban
             Krill = krill;
 
             Pickups = new List<Pickup>();
+            EventEntities = new List<Entity>();
+            EntityBag = new List<Entity>();
+
+            eventDelay = POSVarance.Next(20000, 40000);
+            eventDuration = 0;
+            lastEvent = DateTime.Now;
         }
 
         public int CleanUp()
@@ -73,12 +85,52 @@ namespace CornflowrCorban
                 }
             }
 
+            for (int i = 0; i < EventEntities.Count; i++ )
+            {
+                if(EventEntities[i].Position.X < -100)
+                {
+                    EventEntities.RemoveAt(i);
+                }
+            }
+
                 return finalPointValue;
         }
 
         public void Update(GameTime gameTime)
         {
             if (EntityBag == null) EntityBag = new List<Entity>();
+
+            if (lastEvent.AddMilliseconds(eventDelay) < DateTime.Now && eventDuration <= 0)
+            {
+                eventDuration = POSVarance.Next(2000, 7000);
+            }
+
+            
+
+            if(eventDuration >= 0)
+            {
+                if (lastEventSpawn.AddMilliseconds(100) < DateTime.Now)
+                {
+                    lastEventSpawn = DateTime.Now;
+                    Entity entity = new Entity();
+                    entity.Health = 1;
+                    entity.Image = Game1.Fish;
+                    entity.PointValue = 0;
+                    entity.Position = new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height));
+                    entity.Scale = ((float)POSVarance.NextDouble());
+                    entity.Velocity = new Vector2(POSVarance.Next(-1000, -500),0);
+                    if (entity.Scale < .25f) entity.Scale = .25f;
+
+                    EventEntities.Add(entity);
+                        
+                }
+                eventDuration -= gameTime.ElapsedGameTime.Milliseconds;
+
+                if (eventDuration < 0)
+                {
+                    lastEvent = DateTime.Now;
+                }
+            }
 
             if(lastPickup.AddMilliseconds(pickupDelay) < DateTime.Now && Pickups.Count < 1)
             {
