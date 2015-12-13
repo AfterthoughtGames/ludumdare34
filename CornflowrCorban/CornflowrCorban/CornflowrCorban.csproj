@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bubble.png" />
+    <Content Include="Content\ComicBam.png" />
     <Content Include="Content\Enemy1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -76,7 +77,9 @@
     <None Include="Content\Bubble.xnb" />
     <None Include="Content\Bubble2.xnb" />
     <None Include="Content\Bubble3.xnb" />
+    <None Include="Content\ComicBam.xnb" />
     <None Include="Content\ComicPow.xnb" />
+    <None Include="Content\ComicZap.xnb" />
     <None Include="Content\Enemy1.xnb" />
     <Content Include="Content\Laser.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -45,6 +45,8 @@ namespace CornflowrCorban
         public static Texture2D BubbleImage2;
         public static Texture2D BubbleImage3;
         public static Texture2D ComicHit1;
+        public static Texture2D ComicHit2;
+        public static Texture2D ComicHit3;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
 
@@ -85,6 +87,8 @@ namespace CornflowrCorban
         protected override void LoadContent()
         {
             ComicHit1 = Content.Load<Texture2D>("ComicPow");
+            ComicHit2 = Content.Load<Texture2D>("ComicBam");
+            ComicHit3 = Content.Load<Texture2D>("ComicZap");
 
             LaserImage = Content.Load<Texture2D>("Laser");
             BubbleImage = Content.Load<Texture2D>("Bubble");
@@ -372,6 +376,7 @@ namespace CornflowrCorban
                 {
                     if(currentEn.HitBox.Intersects(currentBeam.HitBox))
                     {
+                        comicHits.Add(new ComicHit(50, new Vector2((currentEn.Position.X + currentBeam.Position.X) / 2f, (currentEn.Position.Y + currentBeam.Position.Y) / 2f)));
                          currentEn.Damage(currentBeam.DamageValue);
                          currentBeam.Damage(1);
                          if (currentBeam.PlayerShoot) Score += 1;

@@ -25,7 +25,20 @@ namespace CornflowrCorban
             maxRotation = rand.Next(-45, 45);
             Position = position;
 
-            Image = Game1.ComicHit1;
+            double nbr = rand.NextDouble();
+            if(nbr < .3)
+            {
+                Image = Game1.ComicHit1;
+            }
+            else if(nbr < .6)
+            {
+                Image = Game1.ComicHit2;
+            }
+            else
+            {
+                Image = Game1.ComicHit3;
+            }
+            
             
             if (maxScale > 1) maxScale = 1;
         }
