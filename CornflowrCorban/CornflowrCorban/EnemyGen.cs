@@ -29,9 +29,13 @@ namespace CornflowrCorban
             POSVarance = new Random(DateTime.Now.Millisecond);
 
             Fish1 = bf;
+            Fish1.PointValue = 2;
             Shark1 = shark;
+            Shark1.PointValue = 4;
             LaserShark = laserShark;
+            LaserShark.PointValue = 10;
             Krill = krill;
+            Krill.PointValue = 15;
 
             Pickups = new List<Pickup>();
         }
@@ -47,15 +51,17 @@ namespace CornflowrCorban
                     if (!EntityBag[entIndex].QuietDeath)
                     {
                         Game1.BloopSound.Play();
+                        finalPointValue += EntityBag[entIndex].PointValue;
                     }
-                    finalPointValue += EntityBag[entIndex].PointValue;
-                    EntityBag.RemoveAt(entIndex);
-                    return 0;
-                }
 
-                if(EntityBag[entIndex].Position.X < -100)
+                    EntityBag.RemoveAt(entIndex);
+                }
+            }
+
+            for (int entIndex = 0; entIndex < EntityBag.Count; entIndex++)
+            {
+                if (EntityBag[entIndex].Position.X < -100)
                 {
-                    //EntityBag.RemoveAt(entIndex);
                     EntityBag[entIndex].DieQuietly();
                 }
             }
