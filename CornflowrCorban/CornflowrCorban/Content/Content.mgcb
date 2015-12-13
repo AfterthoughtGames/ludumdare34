@@ -68,3 +68,9 @@
 /processorParam:TextureFormat=Color
 /build:shark_0000_3.png
 
+#begin GUIFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:GUIFont.spritefont
+
