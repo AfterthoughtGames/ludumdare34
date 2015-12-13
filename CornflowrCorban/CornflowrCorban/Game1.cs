@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -50,6 +51,8 @@ namespace CornflowrCorban
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
 
+        SoundEffect se;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -86,6 +89,8 @@ namespace CornflowrCorban
         /// </summary>
         protected override void LoadContent()
         {
+            se = Content.Load<SoundEffect>("wahwahlaser");
+
             ComicHit1 = Content.Load<Texture2D>("ComicPow");
             ComicHit2 = Content.Load<Texture2D>("ComicBam");
             ComicHit3 = Content.Load<Texture2D>("ComicZap");
@@ -179,6 +184,7 @@ namespace CornflowrCorban
                 Laser laser = Player.Shoot(gameTime);
                 if(laser != null)
                 {
+                    se.Play();
                     lasers.Add(laser);
                 }
             }

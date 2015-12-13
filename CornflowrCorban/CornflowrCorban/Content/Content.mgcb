@@ -140,3 +140,9 @@
 /processorParam:TextureFormat=Color
 /build:ComicZap.png
 
+#begin wahwahlaser.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:wahwahlaser.wav
+
