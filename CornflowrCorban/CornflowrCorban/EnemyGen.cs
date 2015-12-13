@@ -23,11 +23,15 @@ namespace CornflowrCorban
 
         DateTime lastPickup = DateTime.Now;
         int pickupDelay = 20000;
+        int Difficulty = 2;
 
         DateTime lastEvent = DateTime.Now;
         DateTime lastEventSpawn = DateTime.Now;
         int eventDelay;
         int eventDuration;
+
+        DateTime lastDifficultyUpgrade = DateTime.Now;
+        int difficultyDelay = 10000;
 
         public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill)
         {
@@ -111,7 +115,11 @@ namespace CornflowrCorban
                 eventDuration = POSVarance.Next(2000, 7000);
             }
 
-            
+            if(lastDifficultyUpgrade.AddMilliseconds(difficultyDelay) < DateTime.Now)
+            {
+                Difficulty += 1;
+                lastDifficultyUpgrade = DateTime.Now;
+            }
 
             if(eventDuration >= 0)
             {
@@ -148,7 +156,7 @@ namespace CornflowrCorban
                     lastPickup = DateTime.Now;
             }
 
-            if(EntityBag.Count < 5)
+            if(EntityBag.Count < Difficulty)
             {
                 if (POSVarance.NextDouble() > .33)
                 {
