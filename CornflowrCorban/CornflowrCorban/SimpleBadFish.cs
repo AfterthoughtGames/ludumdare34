@@ -15,8 +15,11 @@ namespace CornflowrCorban
         int frameDelay = 0;
         int currentFrame = 0;
         DateTime nextFrameFlip = DateTime.Now;
+        int shootingDelay = 250;
+        DateTime lastShot = DateTime.Now;
+        Game1 gameRef;
 
-        public SimpleBadFish(Texture2D image, Vector2 startPOS, Vector2 velocity, float scale) : base()
+        public SimpleBadFish(Texture2D image, Vector2 startPOS, Vector2 velocity, float scale, Game1 game) : base()
         {
             Image = image;
             Scale = scale;
@@ -27,9 +30,10 @@ namespace CornflowrCorban
 
             frames = new List<Texture2D>();
             frames.Add(image);
+            gameRef = game;
         }
 
-        public SimpleBadFish(List<Texture2D> images, Vector2 startPOS, Vector2 velocity, float scale, int frameDelay)
+        public SimpleBadFish(List<Texture2D> images, Vector2 startPOS, Vector2 velocity, float scale, int frameDelay, Game1 game)
             : base()
         {
             //Image = image;
@@ -38,6 +42,7 @@ namespace CornflowrCorban
             Health = 2;
             PointValue = 2;
             Velocity = velocity;
+            gameRef = game;
 
             frames = images;
             this.frameDelay = frameDelay;
@@ -70,6 +75,10 @@ namespace CornflowrCorban
             }
             else
             {
+                if (Image.Name.Contains("laser"))
+                {
+                    laserShoot(gameTime);
+                }
                 HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
                        (int)Position.Y - (int)(Image.Height / 4.5f * Scale), (int)(Image.Width / 1.5 * Scale), (int)(Image.Height / 4 * Scale));
             }
@@ -92,14 +101,24 @@ namespace CornflowrCorban
 
         public SimpleBadFish Clone()
         {
-            return new SimpleBadFish(this.frames, this.Position, this.Velocity, this.Scale, this.frameDelay);
+            return new SimpleBadFish(this.frames, this.Position, this.Velocity, this.Scale, this.frameDelay, this.gameRef);
         }
 
         public SimpleBadFish Clone(Vector2 pos, Vector2 velocity, float scale)
         {
-            SimpleBadFish tempFish = new SimpleBadFish(this.frames, this.Position, velocity, scale, this.frameDelay);
+            SimpleBadFish tempFish = new SimpleBadFish(this.frames, this.Position, velocity, scale, this.frameDelay, this.gameRef);
             tempFish.Position = pos;
             return tempFish;
+        }
+
+        private void laserShoot(GameTime gameTime)
+        {
+            if (lastShot.AddMilliseconds(shootingDelay) < DateTime.Now)
+            {
+                lastShot = DateTime.Now;
+                gameRef.lasers.Add( new Laser(Position + new Vector2(-200, -75) * Scale, Scale, Game1.LaserImage2, new Vector2(-2000, 0),false));
+                Game1.LaserSound.Play(0.1f, 0f, 0f);
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CornflowrCorban
         KeyboardState oldState;
         GamePadState oldStatePad;
 
-        List<Laser> lasers;
+        public List<Laser> lasers;
         List<Bubble> bubbles;
         List<Bubble> topBubbles;
         List<ComicHit> comicHits;
@@ -45,6 +45,7 @@ namespace CornflowrCorban
         public static bool Debug = false;
         public static Texture2D Pixel;
         public static Texture2D LaserImage;
+        public static Texture2D LaserImage2;
         public static Texture2D BubbleImage;
         public static Texture2D BubbleImage2;
         public static Texture2D BubbleImage3;
@@ -136,6 +137,7 @@ namespace CornflowrCorban
             ComicHit3 = Content.Load<Texture2D>("ComicZap");
 
             LaserImage = Content.Load<Texture2D>("Laser");
+            LaserImage2 = Content.Load<Texture2D>("Laser2");
             BubbleImage = Content.Load<Texture2D>("Bubble");
             BubbleImage2 = Content.Load<Texture2D>("Bubble2");
             BubbleImage3 = Content.Load<Texture2D>("Bubble3");
@@ -260,7 +262,7 @@ namespace CornflowrCorban
                         lasers.RemoveAt(i);
                     }
 
-                    if (lasers[i].Position.X > graphics.PreferredBackBufferWidth + 500)
+                    if (lasers.Count > i && lasers[i].Position.X > graphics.PreferredBackBufferWidth + 500)
                     {
                         lasers.RemoveAt(i);
                     }
@@ -463,11 +465,26 @@ namespace CornflowrCorban
                 {
                     if(currentEn.HitBox.Intersects(currentBeam.HitBox))
                     {
-                        comicHits.Add(new ComicHit(50, new Vector2((currentEn.Position.X + currentBeam.Position.X) / 2f, (currentEn.Position.Y + currentBeam.Position.Y) / 2f)));
-                         currentEn.Damage(currentBeam.DamageValue);
-                         currentBeam.Damage(1);
-                         if (currentBeam.PlayerShoot) Score += 1;
+                        if (currentBeam.PlayerShoot)
+                        {
+                            comicHits.Add(new ComicHit(50, new Vector2((currentEn.Position.X + currentBeam.Position.X) / 2f, (currentEn.Position.Y + currentBeam.Position.Y) / 2f)));
+                            currentEn.Damage(currentBeam.DamageValue);
+                            currentBeam.Damage(1);
+                            Score += 1;
+                        }
+                        
                     }
+                }
+            }
+
+            foreach(Laser l in lasers)
+            {
+                //shark shot it
+                if(l.PlayerShoot == false && Player.HitBox.Intersects(l.HitBox))
+                {
+                    comicHits.Add(new ComicHit(150, new Vector2((l.Position.X + Player.Position.X) / 2f, (l.Position.Y + Player.Position.Y) / 2f)));
+                    Player.Damage(2);
+                    l.Damage(l.Health);
                 }
             }
 
@@ -510,9 +527,9 @@ namespace CornflowrCorban
             laserSharkFrames.Add(LaserShark3);
 
             Gen = new EnemyGen(GraphicsDevice,
-                new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1, 250),
-                new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250),
-                new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250));
+                new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1, 250,this),
+                new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,this),
+                new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,this));
 
             StartNewGame = false;
         }

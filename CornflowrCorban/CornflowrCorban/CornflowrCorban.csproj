@@ -110,6 +110,7 @@
     <Content Include="Content\shark_0002_1.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Content\Laser2.xnb" />
     <None Include="Content\laserShark1.xnb" />
     <None Include="Content\laserShark2.xnb" />
     <None Include="Content\laserShark3.xnb" />
