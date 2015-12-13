@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CornflowrCorban
 {
@@ -55,6 +56,7 @@ namespace CornflowrCorban
 
         public static bool InMenu = true;
         public static bool StartNewGame = false;
+        public static bool ExitGame = false;
 
         SoundEffect se;
 
@@ -111,7 +113,7 @@ namespace CornflowrCorban
             Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             Pixel.SetData<Color>(new Color[] { Color.White });
 
-            TitleScreen = new Title(Content.Load<Texture2D>("Title"));
+            TitleScreen = new Title(Content.Load<Texture2D>("Title"), GUIFont);
             lasers = new List<Laser>();
             bubbles = new List<Bubble>();
             topBubbles = new List<Bubble>();
@@ -141,6 +143,8 @@ namespace CornflowrCorban
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if (ExitGame) Exit();
+
             if (InMenu)
             {
                 TitleScreen.Update(gameTime);
@@ -163,7 +167,7 @@ namespace CornflowrCorban
                 KeyboardState newState = Keyboard.GetState();
 
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                    Exit();
+                    InMenu = true;//Exit();
 
                 if (newState.IsKeyDown(Keys.W) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y > 0)
                 {
@@ -238,7 +242,11 @@ namespace CornflowrCorban
 
                 currentTime = gameTime.TotalGameTime;
 
-                if (Player.Dead) InMenu = true;
+                if (Player.Dead)
+                {
+                    SaveScore();
+                    InMenu = true;
+                }
             }
 
 
@@ -435,6 +443,7 @@ namespace CornflowrCorban
 
         private void NewGame(GameTime gameTime)
         {
+            Score = 0;
             Player = new WhaleOfAPlayer(Content.Load<Texture2D>("Whale"));
 
             lasers = new List<Laser>();
@@ -449,6 +458,31 @@ namespace CornflowrCorban
                 new SimpleBadFish(Content.Load<Texture2D>("shark_0000_3"), Vector2.Zero, new Vector2(-100, 0), 1));
 
             StartNewGame = false;
+        }
+
+        private void SaveScore()
+        {
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\score.txt")) File.Delete(Directory.GetCurrentDirectory() + "\\score.txt");
+            System.IO.File.WriteAllText(Directory.GetCurrentDirectory() + "\\score.txt", Score.ToString(), System.Text.Encoding.ASCII);
+        }
+
+        public static int ReadScore()
+        {
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\score.txt"))
+            {
+                String line = string.Empty;
+
+                using (StreamReader sr = new StreamReader(Directory.GetCurrentDirectory() + "\\score.txt"))
+                {
+                    // Read the stream to a string, and write the string to the console.
+                    line = sr.ReadToEnd();
+                    Console.WriteLine(line);
+                }
+
+                return Convert.ToInt32(line);
+            }
+
+            return 0;
         }
     }
 }
