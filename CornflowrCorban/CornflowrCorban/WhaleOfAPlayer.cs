@@ -19,7 +19,7 @@ namespace CornflowrCorban
         public WhaleOfAPlayer(Texture2D image) : base()
         {
             Image = image;
-            this.Scale = 1;
+            this.Scale = 0.25f;
             this.Position = new Microsoft.Xna.Framework.Vector2(100, 100);
             this.HitBox = new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
             Health = 20;
