@@ -524,6 +524,7 @@ namespace CornflowrCorban
                 {
                     comicHits.Add(new ComicHit(150, new Vector2((p.Position.X + Player.Position.X) / 2f, (p.Position.Y + Player.Position.Y) / 2f),ComicKrill));
                     Score += p.Score;
+                    Player.Health += 2;
                     p.Damage(p.Health);
                 }
             }
