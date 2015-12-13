@@ -139,17 +139,7 @@ namespace CornflowrCorban
             bubbles = new List<Bubble>();
             lasers = new List<Laser>();
 
-            List<Texture2D> jellyFrames = new List<Texture2D>();
-            jellyFrames.Add(Jelly1);
-            jellyFrames.Add(Jelly2);
-            jellyFrames.Add(Jelly3);
-            jellyFrames.Add(Jelly4);
-            jellyFrames.Add(Jelly5);
-            jellyFrames.Add(Jelly6);
-
-            Gen = new EnemyGen(GraphicsDevice,
-                new SimpleBadFish(jellyFrames, Vector2.Zero,new Vector2(-100,0),1,250),
-                new SimpleBadFish(Content.Load<Texture2D>("shark_0000_3"), Vector2.Zero, new Vector2(-100, 0), 1));
+       
 
 
             // TODO: use this.Content to load your game content here
@@ -474,8 +464,16 @@ namespace CornflowrCorban
 
             updateBubbles(gameTime);
 
+            List<Texture2D> jellyFrames = new List<Texture2D>();
+            jellyFrames.Add(Jelly1);
+            jellyFrames.Add(Jelly2);
+            jellyFrames.Add(Jelly3);
+            jellyFrames.Add(Jelly4);
+            jellyFrames.Add(Jelly5);
+            jellyFrames.Add(Jelly6);
+
             Gen = new EnemyGen(GraphicsDevice,
-                new SimpleBadFish(Content.Load<Texture2D>("Enemy1"), Vector2.Zero, new Vector2(-100, 0), 1),
+                new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1, 250),
                 new SimpleBadFish(Content.Load<Texture2D>("shark_0000_3"), Vector2.Zero, new Vector2(-100, 0), 1));
 
             StartNewGame = false;
