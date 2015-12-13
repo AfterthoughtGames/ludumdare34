@@ -68,6 +68,10 @@ namespace CornflowrCorban
         public static Texture2D LaserShark2;
         public static Texture2D LaserShark3;
 
+        public static Texture2D Whale1;
+        public static Texture2D Whale2;
+        public static Texture2D Whale3;
+
         public static Texture2D Jelly1;
         public static Texture2D Jelly2;
         public static Texture2D Jelly3;
@@ -131,6 +135,10 @@ namespace CornflowrCorban
             LaserShark3 = Content.Load<Texture2D>("laserShark3");
             LaserShark2 = Content.Load<Texture2D>("laserShark2");
             LaserShark1 = Content.Load<Texture2D>("laserShark1");
+
+            Whale3 = Content.Load<Texture2D>("Whale3");
+            Whale2 = Content.Load<Texture2D>("Whale2");
+            Whale1 = Content.Load<Texture2D>("Whale");
 
             ComicHit1 = Content.Load<Texture2D>("ComicPow");
             ComicHit2 = Content.Load<Texture2D>("ComicBam");
@@ -499,7 +507,12 @@ namespace CornflowrCorban
         private void NewGame(GameTime gameTime)
         {
             Score = 0;
-            Player = new WhaleOfAPlayer(Content.Load<Texture2D>("Whale"));
+            List<Texture2D> whaleFrames = new List<Texture2D>();
+            whaleFrames.Add(Whale1);
+            whaleFrames.Add(Whale2);
+            whaleFrames.Add(Whale3);
+            whaleFrames.Add(Whale2);
+            Player = new WhaleOfAPlayer(whaleFrames);
 
             lasers = new List<Laser>();
             bubbles = new List<Bubble>();

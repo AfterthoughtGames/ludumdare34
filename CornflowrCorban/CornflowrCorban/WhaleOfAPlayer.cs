@@ -11,18 +11,23 @@ namespace CornflowrCorban
     {
         private float normalScale = .25f;
         int shootingDelay = 250;
+        DateTime nextFrameFlip = DateTime.Now;
         DateTime lastShot = DateTime.Now;
+        List<Texture2D> frames;
+        int frameDelay = 250;
+        int currentFrame = 0;
 
 
             
 
-        public WhaleOfAPlayer(Texture2D image) : base()
+        public WhaleOfAPlayer(List<Texture2D> images) : base()
         {
-            Image = image;
+            Image = images[0];
             this.Scale = 0.25f;
             this.Position = new Microsoft.Xna.Framework.Vector2(100, 100);
             this.HitBox = new Microsoft.Xna.Framework.Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
             Health = 20;
+            frames = images;
         }
 
         private void updatePosition()
@@ -88,7 +93,18 @@ namespace CornflowrCorban
 
         public override void Update(GameTime gameTime)
         {
-            //HitBox = new Rectangle((int)Position.X, (int)Position.Y, Image.Width, Image.Height);
+            //flip a frame?
+            if (nextFrameFlip < DateTime.Now)
+            {
+                nextFrameFlip = DateTime.Now.AddMilliseconds(frameDelay);
+                currentFrame++;
+                if (currentFrame >= frames.Count)
+                {
+                    currentFrame = 0;
+                }
+            }
+
+            Image = frames[currentFrame];
 
             updateScale(gameTime);
             updatePosition();
