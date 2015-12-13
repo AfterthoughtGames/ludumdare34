@@ -107,6 +107,17 @@
 /processorParam:TextureFormat=Compressed
 /build:GUIFont.spritefont
 
+#begin Title.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Title.png
+
 #begin ComicPow.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -205,4 +216,10 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:jellyfishAnimation_0005_tentacles-1.png
+
+#begin wahwahlaser.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:wahwahlaser.wav
 

@@ -27,6 +27,8 @@ namespace CornflowrCorban
         List<Bubble> topBubbles;
         List<ComicHit> comicHits;
 
+        Title TitleScreen;
+
         int Score { get; set; }
 
         private Vector2 backgroundParallax;
@@ -50,6 +52,9 @@ namespace CornflowrCorban
         public static Texture2D ComicHit3;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
+
+        public static bool InMenu = true;
+        public static bool StartNewGame = false;
 
         SoundEffect se;
 
@@ -76,7 +81,7 @@ namespace CornflowrCorban
 
             base.Initialize();
             
-            this.Window.Title = "Cornflower Corban - Violent Sol Team 12/2015";
+            this.Window.Title = "Cornflower Corban - Violent Sol Team 12/2015 - " + GraphicsDevice.Viewport.Width + " x " + GraphicsDevice.Viewport.Height;
 
             oldState = Keyboard.GetState();
 
@@ -99,7 +104,6 @@ namespace CornflowrCorban
             BubbleImage = Content.Load<Texture2D>("Bubble");
             BubbleImage2 = Content.Load<Texture2D>("Bubble2");
             BubbleImage3 = Content.Load<Texture2D>("Bubble3");
-            Player = new WhaleOfAPlayer( Content.Load<Texture2D>("Whale"));
             GUIFont = Content.Load<SpriteFont>("GUIFont");
             Background = Content.Load<Texture2D>("water");
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -107,15 +111,16 @@ namespace CornflowrCorban
             Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             Pixel.SetData<Color>(new Color[] { Color.White });
 
+            TitleScreen = new Title(Content.Load<Texture2D>("Title"));
             lasers = new List<Laser>();
             bubbles = new List<Bubble>();
             topBubbles = new List<Bubble>();
             comicHits = new List<ComicHit>();
             createBubbles(100);
 
-            Gen = new EnemyGen(GraphicsDevice,
-                new SimpleBadFish(Content.Load<Texture2D>("Enemy1"), Vector2.Zero,new Vector2(-100,0),1),
-                new SimpleBadFish(Content.Load<Texture2D>("shark_0000_3"), Vector2.Zero, new Vector2(-100, 0), 1));
+            topBubbles = new List<Bubble>();
+            bubbles = new List<Bubble>();
+            lasers = new List<Laser>();
 
             // TODO: use this.Content to load your game content here
         }
@@ -136,89 +141,106 @@ namespace CornflowrCorban
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if(StartTime == null)
+            if (InMenu)
             {
-                StartTime = gameTime.TotalGameTime;
+                TitleScreen.Update(gameTime);
             }
-
-            AdditionalVelocity = new Vector2(-1000 * (Player.Position.X / graphics.PreferredBackBufferWidth), 0);
-
-            KeyboardState newState = Keyboard.GetState();
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            if (newState.IsKeyDown(Keys.W) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y > 0)
+            else
             {
-                //do up
-                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y - Player.Velocity));
-            }
-
-            if (newState.IsKeyDown(Keys.S) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y < 0)
-            {
-                //do down
-                Player.Position = new Vector2(Player.Position.X, (Player.Position.Y + Player.Velocity));
-            }
-
-            if (newState.IsKeyDown(Keys.A) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X < 0)
-            {
-                //do left
-                Player.Position = new Vector2((Player.Position.X - Player.Velocity), Player.Position.Y);
-            }
-
-            if (newState.IsKeyDown(Keys.D) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X > 0)
-            {
-                //do right
-                Player.Position = new Vector2((Player.Position.X + Player.Velocity), Player.Position.Y);
-            }
-
-            if ((newState.IsKeyDown(Keys.F1) && !oldState.IsKeyDown(Keys.F1)) || (GamePad.GetState(PlayerIndex.One).Buttons.RightStick == ButtonState.Pressed && oldStatePad.Buttons.RightStick == ButtonState.Released))
-            {
-                //debug toggle
-                Debug = !Debug;
-            }
-
-            if (newState.IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
-            {
-                //shoot
-                Laser laser = Player.Shoot(gameTime);
-                if(laser != null)
+                // Start a new game
+                if(StartNewGame)
                 {
-                    se.Play();
-                    lasers.Add(laser);
-                }
-            }
-
-            foreach(Laser l in lasers)
-            {
-                l.Update(gameTime);
-            }
-
-            for (int i = 0; i < lasers.Count;i++ )
-            {
-                if (lasers[i].Position.X < -500)
-                {
-                    lasers.RemoveAt(i);
+                    NewGame(gameTime);
                 }
 
-                if (lasers[i].Position.X > graphics.PreferredBackBufferWidth + 500)
+                if (StartTime == null)
                 {
-                    lasers.RemoveAt(i);
+                    StartTime = gameTime.TotalGameTime;
                 }
+
+                AdditionalVelocity = new Vector2(-1000 * (Player.Position.X / graphics.PreferredBackBufferWidth), 0);
+
+                KeyboardState newState = Keyboard.GetState();
+
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    Exit();
+
+                if (newState.IsKeyDown(Keys.W) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y > 0)
+                {
+                    //do up
+                    Player.Position = new Vector2(Player.Position.X, (Player.Position.Y - Player.Velocity));
+                }
+
+                if (newState.IsKeyDown(Keys.S) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y < 0)
+                {
+                    //do down
+                    Player.Position = new Vector2(Player.Position.X, (Player.Position.Y + Player.Velocity));
+                }
+
+                if (newState.IsKeyDown(Keys.A) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X < 0)
+                {
+                    //do left
+                    Player.Position = new Vector2((Player.Position.X - Player.Velocity), Player.Position.Y);
+                }
+
+                if (newState.IsKeyDown(Keys.D) || GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X > 0)
+                {
+                    //do right
+                    Player.Position = new Vector2((Player.Position.X + Player.Velocity), Player.Position.Y);
+                }
+
+                if ((newState.IsKeyDown(Keys.F1) && !oldState.IsKeyDown(Keys.F1)) || (GamePad.GetState(PlayerIndex.One).Buttons.RightStick == ButtonState.Pressed && oldStatePad.Buttons.RightStick == ButtonState.Released))
+                {
+                    //debug toggle
+                    Debug = !Debug;
+                    
+                }
+
+                if (newState.IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
+                {
+                    //shoot
+                    Laser laser = Player.Shoot(gameTime);
+                    if (laser != null)
+                    {
+                        lasers.Add(laser);
+                        se.Play();
+                    }
+                }
+
+                foreach (Laser l in lasers)
+                {
+                    l.Update(gameTime);
+                }
+
+                for (int i = 0; i < lasers.Count; i++)
+                {
+                    if (lasers[i].Position.X < -500)
+                    {
+                        lasers.RemoveAt(i);
+                    }
+
+                    if (lasers[i].Position.X > graphics.PreferredBackBufferWidth + 500)
+                    {
+                        lasers.RemoveAt(i);
+                    }
+                }
+
+                if (Player != null) Player.Update(gameTime);
+                updateBubbles(gameTime);
+                oldState = newState;
+                oldStatePad = GamePad.GetState(PlayerIndex.One);
+
+                Gen.Update(gameTime);
+
+                CollsionDetection();
+
+                Score += Gen.CleanUp();
+
+                currentTime = gameTime.TotalGameTime;
+
+                if (Player.Dead) InMenu = true;
             }
 
-            Player.Update(gameTime);
-            updateBubbles(gameTime);
-            oldState = newState;
-            oldStatePad = GamePad.GetState(PlayerIndex.One);
-
-            Gen.Update(gameTime);
-
-            CollsionDetection();
-
-            Score += Gen.CleanUp();
-
-            currentTime = gameTime.TotalGameTime;
 
             foreach (ComicHit hit in comicHits)
             {
@@ -234,53 +256,66 @@ namespace CornflowrCorban
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            backgroundParallax += new Vector2(-50, -19) * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
-                spriteBatch.Draw(Background,Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            if (InMenu)
+            {
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+                spriteBatch.Begin();
+                TitleScreen.Draw(gameTime, spriteBatch);
+                spriteBatch.End();
+            }
+            else
+            {
+                GraphicsDevice.Clear(Color.CornflowerBlue);
+                backgroundParallax += new Vector2(-50, -19) * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+                spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
                 //spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width + (int)backgroundParallax.X, GraphicsDevice.Viewport.Height), new Color(255,255,255,.15f), 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
-            spriteBatch.End();
+                spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
                 //spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.DarkGreen);
-            spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X*4, (int)backgroundParallax.Y, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), new Color(.5f,.5f,5f,.25f));
-            spriteBatch.End();
-            
-            spriteBatch.Begin();
+                spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.DarkGreen);
+                spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X * 4, (int)backgroundParallax.Y, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), new Color(.5f, .5f, 5f, .25f));
+                spriteBatch.End();
 
-            foreach (Bubble b in bubbles)
-            {
-                b.Draw(spriteBatch);
+                spriteBatch.Begin();
+
+                foreach (Bubble b in bubbles)
+                {
+                    b.Draw(spriteBatch);
+                }
+
+                foreach (Laser l in lasers)
+                {
+                    l.Draw(gameTime, spriteBatch);
+                }
+
+                if (Player != null) Player.Draw(gameTime, spriteBatch);
+                if (Player != null) Gen.Draw(gameTime, spriteBatch);
+
+
+                foreach (Bubble b in topBubbles)
+                {
+                    b.Draw(spriteBatch);
+                }
+
+                foreach (ComicHit hit in comicHits)
+                {
+                    hit.Draw(gameTime, spriteBatch);
+                }
+
+                spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
+                if(Player != null) spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
+                spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.Red);
+                spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
+
+                spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
+                if(Player != null) spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
+                spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.Red);
+                spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
+
+                spriteBatch.End();
             }
-
-            foreach (Laser l in lasers)
-            {
-                l.Draw(gameTime, spriteBatch);
-            }
-
-            
-
-            Player.Draw(gameTime, spriteBatch);
-            Gen.Draw(gameTime, spriteBatch);
-            
-
-            foreach (Bubble b in topBubbles)
-            {
-                b.Draw(spriteBatch);
-            }
-
-            foreach (ComicHit hit in comicHits)
-            {
-                hit.Draw(gameTime, spriteBatch);
-            }
-
-            spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
-            spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
-            spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.Red);
-            spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
-
-            spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -396,6 +431,24 @@ namespace CornflowrCorban
                 if (lasers[laserIndex].Dead) lasers.RemoveAt(laserIndex);
             }
 
+        }
+
+        private void NewGame(GameTime gameTime)
+        {
+            Player = new WhaleOfAPlayer(Content.Load<Texture2D>("Whale"));
+
+            lasers = new List<Laser>();
+            bubbles = new List<Bubble>();
+            topBubbles = new List<Bubble>();
+            createBubbles(100);
+
+            updateBubbles(gameTime);
+
+            Gen = new EnemyGen(GraphicsDevice,
+                new SimpleBadFish(Content.Load<Texture2D>("Enemy1"), Vector2.Zero, new Vector2(-100, 0), 1),
+                new SimpleBadFish(Content.Load<Texture2D>("shark_0000_3"), Vector2.Zero, new Vector2(-100, 0), 1));
+
+            StartNewGame = false;
         }
     }
 }

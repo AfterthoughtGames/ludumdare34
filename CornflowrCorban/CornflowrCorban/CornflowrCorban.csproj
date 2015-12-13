@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomStaticStuff.cs" />
     <Compile Include="SimpleBadFish.cs" />
+    <Compile Include="Title.cs" />
     <Compile Include="WhaleOfAPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bubble.png" />
-    <Content Include="Content\ComicBam.png" />
     <Content Include="Content\Enemy1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -77,9 +77,6 @@
     <None Include="Content\Bubble.xnb" />
     <None Include="Content\Bubble2.xnb" />
     <None Include="Content\Bubble3.xnb" />
-    <None Include="Content\ComicBam.xnb" />
-    <None Include="Content\ComicPow.xnb" />
-    <None Include="Content\ComicZap.xnb" />
     <None Include="Content\Enemy1.xnb" />
     <Content Include="Content\Laser.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -104,6 +101,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Content\shark_0000_3.xnb" />
+    <None Include="Content\Title.xnb" />
+    <None Include="Content\wahwahlaser.xnb" />
     <None Include="Content\water.xnb" />
     <None Include="Content\Whale.xnb" />
   </ItemGroup>
