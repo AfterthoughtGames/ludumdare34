@@ -101,7 +101,15 @@
     <Content Include="Content\jellyfishAnimation_0005_tentacles-1.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Content\shark_0000_3.xnb" />
+    <Content Include="Content\shark_0000_3.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\shark_0001_2.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\shark_0002_1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\Title.xnb" />
     <None Include="Content\wahwahlaser.xnb" />
     <None Include="Content\water.xnb" />
