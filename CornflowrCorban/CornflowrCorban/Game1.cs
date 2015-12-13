@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -24,6 +25,7 @@ namespace CornflowrCorban
         List<Laser> lasers;
         List<Bubble> bubbles;
         List<Bubble> topBubbles;
+        List<ComicHit> comicHits;
 
         Title TitleScreen;
 
@@ -45,11 +47,16 @@ namespace CornflowrCorban
         public static Texture2D BubbleImage;
         public static Texture2D BubbleImage2;
         public static Texture2D BubbleImage3;
+        public static Texture2D ComicHit1;
+        public static Texture2D ComicHit2;
+        public static Texture2D ComicHit3;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
 
         public static bool InMenu = true;
         public static bool StartNewGame = false;
+
+        SoundEffect se;
 
         public Game1()
         {
@@ -87,6 +94,12 @@ namespace CornflowrCorban
         /// </summary>
         protected override void LoadContent()
         {
+            se = Content.Load<SoundEffect>("wahwahlaser");
+
+            ComicHit1 = Content.Load<Texture2D>("ComicPow");
+            ComicHit2 = Content.Load<Texture2D>("ComicBam");
+            ComicHit3 = Content.Load<Texture2D>("ComicZap");
+
             LaserImage = Content.Load<Texture2D>("Laser");
             BubbleImage = Content.Load<Texture2D>("Bubble");
             BubbleImage2 = Content.Load<Texture2D>("Bubble2");
@@ -99,6 +112,11 @@ namespace CornflowrCorban
             Pixel.SetData<Color>(new Color[] { Color.White });
 
             TitleScreen = new Title(Content.Load<Texture2D>("Title"));
+            lasers = new List<Laser>();
+            bubbles = new List<Bubble>();
+            topBubbles = new List<Bubble>();
+            comicHits = new List<ComicHit>();
+            createBubbles(100);
 
             topBubbles = new List<Bubble>();
             bubbles = new List<Bubble>();
@@ -175,6 +193,7 @@ namespace CornflowrCorban
                 {
                     //debug toggle
                     Debug = !Debug;
+                    
                 }
 
                 if (newState.IsKeyDown(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed)
@@ -184,6 +203,7 @@ namespace CornflowrCorban
                     if (laser != null)
                     {
                         lasers.Add(laser);
+                        se.Play();
                     }
                 }
 
@@ -221,6 +241,11 @@ namespace CornflowrCorban
                 if (Player.Dead) InMenu = true;
             }
 
+
+            foreach (ComicHit hit in comicHits)
+            {
+                hit.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -265,8 +290,6 @@ namespace CornflowrCorban
                     l.Draw(gameTime, spriteBatch);
                 }
 
-
-
                 if (Player != null) Player.Draw(gameTime, spriteBatch);
                 if (Player != null) Gen.Draw(gameTime, spriteBatch);
 
@@ -275,6 +298,16 @@ namespace CornflowrCorban
                 {
                     b.Draw(spriteBatch);
                 }
+
+                foreach (ComicHit hit in comicHits)
+                {
+                    hit.Draw(gameTime, spriteBatch);
+                }
+
+                spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
+                if(Player != null) spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
+                spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.Red);
+                spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
 
                 spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
                 if(Player != null) spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
@@ -375,6 +408,7 @@ namespace CornflowrCorban
             {
                 if(Player.HitBox.Intersects(currentEn.HitBox) && currentEn.Dead == false)
                 {
+                    comicHits.Add(new ComicHit(150,new Vector2((currentEn.Position.X + Player.Position.X)/2f,(currentEn.Position.Y + Player.Position.Y)/2f)));
                     Player.Damage(1);
                     currentEn.Damage(currentEn.Health);
                 }
@@ -383,6 +417,7 @@ namespace CornflowrCorban
                 {
                     if(currentEn.HitBox.Intersects(currentBeam.HitBox))
                     {
+                        comicHits.Add(new ComicHit(50, new Vector2((currentEn.Position.X + currentBeam.Position.X) / 2f, (currentEn.Position.Y + currentBeam.Position.Y) / 2f)));
                          currentEn.Damage(currentBeam.DamageValue);
                          currentBeam.Damage(1);
                          if (currentBeam.PlayerShoot) Score += 1;
