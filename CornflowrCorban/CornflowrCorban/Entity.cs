@@ -27,6 +27,8 @@ namespace CornflowrCorban
         int BlueValue = 0;
         int GreenValue = 0;
         int LineThickness = 3;
+        float rotation = 0;
+        Color color = Color.White;
 
         public Entity()
         {
@@ -43,6 +45,13 @@ namespace CornflowrCorban
 
             HitBox = new Rectangle((int)Position.X - (int)(Image.Width / 2 * Scale),
                     (int)Position.Y - (int)(Image.Height / 2 * Scale), (int)(Image.Width * Scale), (int)(Image.Height * Scale));
+
+            if(Image.Name.Contains("ink"))
+            {
+                rotation += 2 * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
+                //Scale += 2 * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
+                //color = new Color(Color.White, 1-3 * (gameTime.ElapsedGameTime.Milliseconds / 1000f) / 3f);
+            }
         }
 
         public void Damage(int amount)
@@ -73,7 +82,7 @@ namespace CornflowrCorban
             }
 
             if(Dead == false)
-            batch.Draw(Image, Position, null, Color.White, 0, new Vector2(Image.Width / 2, Image.Height / 2), Scale, SpriteEffects.None, 0);
+            batch.Draw(Image, Position, null, color, rotation, new Vector2(Image.Width / 2, Image.Height / 2), Scale, SpriteEffects.None, 0);
         }
 
         public void DieQuietly()
