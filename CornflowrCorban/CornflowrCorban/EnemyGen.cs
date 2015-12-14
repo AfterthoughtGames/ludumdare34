@@ -181,7 +181,7 @@ namespace CornflowrCorban
                     EntityBag.Add(Shark1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
                         new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)), scale));
                 }
-                else if (POSVarance.NextDouble() > .33)
+                else if (POSVarance.NextDouble() > .75)
                 {
                     //Octo
                     float scale = ((float)POSVarance.NextDouble());
