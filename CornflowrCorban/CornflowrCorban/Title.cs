@@ -63,7 +63,7 @@ namespace CornflowrCorban
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
             //spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
             spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X, 0, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), Color.DarkGreen);
-            spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X * 1, (int)backgroundParallax.Y, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), new Color(.5f, .5f, 5f, .25f));
+            spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X * 4, (int)backgroundParallax.Y, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), new Color(.5f, .5f, 5f, .25f));
             spriteBatch.End();
 
             spriteBatch.Begin();
