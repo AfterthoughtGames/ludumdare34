@@ -53,6 +53,8 @@ namespace CornflowrCorban
         public static Texture2D ComicHit2;
         public static Texture2D ComicHit3;
 
+        public static Texture2D Ink;
+
         public static Texture2D ComicKrill;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
@@ -65,6 +67,9 @@ namespace CornflowrCorban
         public static Texture2D Shark1;
         public static Texture2D Shark2;
         public static Texture2D Shark3;
+
+        public static Texture2D Octo1;
+        public static Texture2D Octo2;
 
         public static Texture2D LaserShark1;
         public static Texture2D LaserShark2;
@@ -127,12 +132,17 @@ namespace CornflowrCorban
             LaserSound = Content.Load<SoundEffect>("wahwahlaser");
             BloopSound = Content.Load<SoundEffect>("bloopbloop");
 
+            Ink = Content.Load<Texture2D>("ink");
+
             Jelly1 = Content.Load<Texture2D>("jellyfishAnimation_0000_tentacles-6");
             Jelly2 = Content.Load<Texture2D>("jellyfishAnimation_0001_tentacles-5");
             Jelly3 = Content.Load<Texture2D>("jellyfishAnimation_0002_tentacles-4");
             Jelly4 = Content.Load<Texture2D>("jellyfishAnimation_0003_tentacles-3");
             Jelly5 = Content.Load<Texture2D>("jellyfishAnimation_0004_tentacles-2");
             Jelly6 = Content.Load<Texture2D>("jellyfishAnimation_0005_tentacles-1");
+
+            Octo1 = Content.Load<Texture2D>("octopusAnimation_0001_2");
+            Octo2 = Content.Load<Texture2D>("octopusAnimation_0002_1");
 
             Shark1 = Content.Load<Texture2D>("shark_0000_3");
             Shark2 = Content.Load<Texture2D>("shark_0001_2");
@@ -577,11 +587,16 @@ namespace CornflowrCorban
             laserSharkFrames.Add(LaserShark2);
             laserSharkFrames.Add(LaserShark3);
 
+            List<Texture2D> octoFrames = new List<Texture2D>();
+            octoFrames.Add(Octo1);
+            octoFrames.Add(Octo2);
+
             Gen = new EnemyGen(GraphicsDevice,
                 new SimpleBadFish(jellyFrames, Vector2.Zero, new Vector2(-100, 0), 1f, 250,1,this),
                 new SimpleBadFish(sharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,2,this),
                 new SimpleBadFish(laserSharkFrames, Vector2.Zero, new Vector2(-100, 0), 1,250,4,this),
-                new Pickup(Vector2.Zero,1,Content.Load<Texture2D>("Krill"),new Vector2(-500,0),5));
+                new Pickup(Vector2.Zero,1,Content.Load<Texture2D>("Krill"),new Vector2(-500,0),5),
+                new SimpleBadFish(octoFrames, Vector2.Zero, new Vector2(-50, 0), 1, 250, 4, this));
 
             comicHits = new List<ComicHit>();
 

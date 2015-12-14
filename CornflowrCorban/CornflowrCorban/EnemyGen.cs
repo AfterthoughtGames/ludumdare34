@@ -19,6 +19,7 @@ namespace CornflowrCorban
         SimpleBadFish Fish1 { get; set; }
         SimpleBadFish Shark1 { get; set; }
         SimpleBadFish LaserShark { get; set; }
+        SimpleBadFish Octo { get; set; }
         Pickup Krill { get; set; }
 
         DateTime lastPickup = DateTime.Now;
@@ -33,7 +34,10 @@ namespace CornflowrCorban
         DateTime lastDifficultyUpgrade = DateTime.Now;
         int difficultyDelay = 10000;
 
-        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill)
+        DateTime lastInk = DateTime.Now;
+        int inkDelay = 250;
+
+        public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill, SimpleBadFish octo)
         {
             SpawnBox = new Rectangle(gd.Viewport.Width + 1, 0, gd.Viewport.Height, gd.Viewport.Height);
             POSVarance = new Random(DateTime.Now.Millisecond);
@@ -46,6 +50,8 @@ namespace CornflowrCorban
             LaserShark.PointValue = 10;
             Krill = krill;
             Krill.PointValue = 15;
+            Octo = octo;
+            octo.PointValue = 8;
 
             Pickups = new List<Pickup>();
             EventEntities = new List<Entity>();
@@ -175,6 +181,14 @@ namespace CornflowrCorban
                     EntityBag.Add(Shark1.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
                         new Vector2(POSVarance.Next(-15, -10), POSVarance.Next(-3, 3)), scale));
                 }
+                else if (POSVarance.NextDouble() > .75)
+                {
+                    //Octo
+                    float scale = ((float)POSVarance.NextDouble());
+                    if (scale < .5f) scale = .5f;
+                    EntityBag.Add(Octo.Clone(new Vector2(POSVarance.Next(SpawnBox.Left, SpawnBox.Left + SpawnBox.Width), POSVarance.Next(SpawnBox.Top, SpawnBox.Top + SpawnBox.Height)),
+                        new Vector2(POSVarance.Next(-10, -10), POSVarance.Next(-3, 3)), scale));
+                }
                 else
                 {
                     //Shark
@@ -188,6 +202,26 @@ namespace CornflowrCorban
             foreach(Entity currentEnt in EntityBag)
             {
                 currentEnt.Update(gameTime);
+
+                if(currentEnt.Image.Name.Contains("octo"))
+                {
+                    if (lastInk.AddMilliseconds(inkDelay) < DateTime.Now)
+                    {
+                        lastInk = DateTime.Now;
+                        Entity entity = new Entity();
+                        entity.Health = 1;
+                        entity.Image = Game1.Ink;
+                        entity.PointValue = 0;
+                        entity.Position = currentEnt.Position + new Vector2(100,0);
+                        entity.Scale = ((float)POSVarance.NextDouble()/2.5f);
+                        entity.Velocity = new Vector2(POSVarance.Next(-300, -180), 0);
+
+                        if (entity.Scale < .2f) entity.Scale = .2f;
+
+                        EventEntities.Add(entity);
+
+                    }
+                }
             }
 
             foreach (Pickup p in Pickups)
