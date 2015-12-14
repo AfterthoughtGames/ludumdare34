@@ -53,6 +53,8 @@ namespace CornflowrCorban
         public static Texture2D ComicHit2;
         public static Texture2D ComicHit3;
 
+        public static Texture2D Ink;
+
         public static Texture2D ComicKrill;
         public static Vector2 AdditionalVelocity;
         public static SpriteFont GUIFont;
@@ -129,6 +131,8 @@ namespace CornflowrCorban
 
             LaserSound = Content.Load<SoundEffect>("wahwahlaser");
             BloopSound = Content.Load<SoundEffect>("bloopbloop");
+
+            Ink = Content.Load<Texture2D>("ink");
 
             Jelly1 = Content.Load<Texture2D>("jellyfishAnimation_0000_tentacles-6");
             Jelly2 = Content.Load<Texture2D>("jellyfishAnimation_0001_tentacles-5");

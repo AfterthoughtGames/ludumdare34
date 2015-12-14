@@ -215,7 +215,7 @@ namespace CornflowrCorban
                         entity.Position = currentEnt.Position + new Vector2(100,0);
                         entity.Scale = ((float)POSVarance.NextDouble()/2.5f);
                         entity.Velocity = new Vector2(POSVarance.Next(-300, -180), 0);
-                        
+
                         if (entity.Scale < .2f) entity.Scale = .2f;
 
                         EventEntities.Add(entity);
