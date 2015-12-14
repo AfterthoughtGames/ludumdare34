@@ -51,45 +51,46 @@ namespace CornflowrCorban
 
         public void Draw(GameTime gameTime, SpriteBatch sb)
         {
-            SpriteBatch spriteBatch = sb;
+            //SpriteBatch spriteBatch = sb;
 
-            //GraphicsDevice.Clear(Color.CornflowerBlue);
-            backgroundParallax += new Vector2(-50, -19) * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
+            ////GraphicsDevice.Clear(Color.CornflowerBlue);
+            //backgroundParallax += new Vector2(-50, -19) * (gameTime.ElapsedGameTime.Milliseconds / 1000f);
             
-            spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(0, 0, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
-            //spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width + (int)backgroundParallax.X, GraphicsDevice.Viewport.Height), new Color(255,255,255,.15f), 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
-            spriteBatch.End();
+            //spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(0, 0, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            ////spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width + (int)backgroundParallax.X, GraphicsDevice.Viewport.Height), new Color(255,255,255,.15f), 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            //spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
-            //spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X, 0, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), Color.DarkGreen);
-            spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X * 4, (int)backgroundParallax.Y, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), new Color(.5f, .5f, 5f, .25f));
-            spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+            ////spriteBatch.Draw(Background, Vector2.Zero, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.Gray, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            //spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X, 0, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), Color.DarkGreen);
+            //spriteBatch.Draw(Game1.Background, Vector2.Zero, new Rectangle(-(int)backgroundParallax.X * 4, (int)backgroundParallax.Y, sb.GraphicsDevice.Viewport.Width, sb.GraphicsDevice.Viewport.Height), new Color(.5f, .5f, 5f, .25f));
+            //spriteBatch.End();
 
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
 
-            foreach (Bubble b in bubbles)
-            {
-                b.Draw(spriteBatch);
-            }
-
-            //foreach (Entity e in Gen.EventEntities)
+            //foreach (Bubble b in bubbles)
             //{
-            //    e.Draw(gameTime, spriteBatch);
+            //    b.Draw(spriteBatch);
             //}
 
-            foreach (Bubble b in topBubbles)
-            {
-                b.Draw(spriteBatch);
-            }
+            ////foreach (Entity e in Gen.EventEntities)
+            ////{
+            ////    e.Draw(gameTime, spriteBatch);
+            ////}
 
-            sb.Draw(Game1.Whale1, new Vector2((sb.GraphicsDevice.Viewport.Width / 2) - 400,(sb.GraphicsDevice.Viewport.Height / 2)- 200 ), Color.White);
-            sb.DrawString(guiText, "Previous High Score: " + ScoreSystem.ReadScore().ToString(), new Vector2(sb.GraphicsDevice.Viewport.Width - 214, 10), Color.Black);
-            sb.DrawString(guiText, "Previous Score: " + Game1.Score.ToString(), new Vector2(sb.GraphicsDevice.Viewport.Width - 170, 25), Color.Black);
-            sb.DrawString(guiText, "Press Enter or Start Button to Play", new Vector2((sb.GraphicsDevice.Viewport.Width / 2) - 100, sb.GraphicsDevice.Viewport.Height - 250), Color.Red);
-            sb.DrawString(guiText, "Press Esc or Back Button to Exit", new Vector2((sb.GraphicsDevice.Viewport.Width / 2) - 88, sb.GraphicsDevice.Viewport.Height - 224), Color.Red);
+            //foreach (Bubble b in topBubbles)
+            //{
+            //    b.Draw(spriteBatch);
+            //}
 
-            spriteBatch.End();
+            sb.Draw(titleImage, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 0.87f, SpriteEffects.None, 0f);
+            //sb.Draw(Game1.Whale1, new Vector2((sb.GraphicsDevice.Viewport.Width / 2) - 400,(sb.GraphicsDevice.Viewport.Height / 2)- 200 ), Color.White);
+            sb.DrawString(guiText, "Previous High Score: " + ScoreSystem.ReadScore().ToString(), new Vector2(sb.GraphicsDevice.Viewport.Width - 214, 10), Color.Green);
+            sb.DrawString(guiText, "Previous Score: " + Game1.Score.ToString(), new Vector2(sb.GraphicsDevice.Viewport.Width - 170, 28), Color.Green);
+            sb.DrawString(guiText, "Press Enter or Start Button to Play", new Vector2((sb.GraphicsDevice.Viewport.Width / 2) - 100, sb.GraphicsDevice.Viewport.Height - 270), Color.White);
+            sb.DrawString(guiText, "Press Esc or Back Button to Exit", new Vector2((sb.GraphicsDevice.Viewport.Width / 2) - 88, sb.GraphicsDevice.Viewport.Height - 244), Color.White);
+
+            //spriteBatch.End();
         }
 
         private void TitleGame(GameTime gameTime, GraphicsDeviceManager gd)
