@@ -34,6 +34,9 @@ namespace CornflowrCorban
         DateTime lastDifficultyUpgrade = DateTime.Now;
         int difficultyDelay = 10000;
 
+        DateTime lastInk = DateTime.Now;
+        int inkDelay = 250;
+
         public EnemyGen(GraphicsDevice gd, SimpleBadFish bf, SimpleBadFish shark, SimpleBadFish laserShark, Pickup krill, SimpleBadFish octo)
         {
             SpawnBox = new Rectangle(gd.Viewport.Width + 1, 0, gd.Viewport.Height, gd.Viewport.Height);
@@ -199,6 +202,26 @@ namespace CornflowrCorban
             foreach(Entity currentEnt in EntityBag)
             {
                 currentEnt.Update(gameTime);
+
+                if(currentEnt.Image.Name.Contains("octo"))
+                {
+                    if (lastInk.AddMilliseconds(inkDelay) < DateTime.Now)
+                    {
+                        lastInk = DateTime.Now;
+                        Entity entity = new Entity();
+                        entity.Health = 1;
+                        entity.Image = Game1.Ink;
+                        entity.PointValue = 0;
+                        entity.Position = currentEnt.Position + new Vector2(100,0);
+                        entity.Scale = ((float)POSVarance.NextDouble()/2.5f);
+                        entity.Velocity = new Vector2(POSVarance.Next(-300, -180), 0);
+                        
+                        if (entity.Scale < .2f) entity.Scale = .2f;
+
+                        EventEntities.Add(entity);
+
+                    }
+                }
             }
 
             foreach (Pickup p in Pickups)
