@@ -18,7 +18,7 @@ namespace CornflowrCorban
 
         WhaleOfAPlayer Player { get; set; }
 
-        Texture2D Background { get; set; }
+        public static Texture2D Background { get; set; }
 
         KeyboardState oldState;
         GamePadState oldStatePad;
@@ -174,7 +174,7 @@ namespace CornflowrCorban
             Pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             Pixel.SetData<Color>(new Color[] { Color.White });
 
-            TitleScreen = new Title(Content.Load<Texture2D>("Title"), GUIFont);
+            TitleScreen = new Title(Content.Load<Texture2D>("Title"), GUIFont, graphics);
             lasers = new List<Laser>();
             bubbles = new List<Bubble>();
             topBubbles = new List<Bubble>();
@@ -212,7 +212,7 @@ namespace CornflowrCorban
 
             if (InMenu)
             {
-                TitleScreen.Update(gameTime);
+                TitleScreen.Update(gameTime, graphics);
             }
             else if(Gen != null && !StartNewGame)
             {
@@ -341,8 +341,8 @@ namespace CornflowrCorban
         {
             if (InMenu)
             {
-                GraphicsDevice.Clear(Color.CornflowerBlue);
-                spriteBatch.Begin();
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, null, null);
+                //spriteBatch.Begin();
                 TitleScreen.Draw(gameTime, spriteBatch);
                 spriteBatch.End();
             }
