@@ -391,15 +391,10 @@ namespace CornflowrCorban
                     hit.Draw(gameTime, spriteBatch);
                 }
 
-                spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
-                if(Player != null) spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
-                spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.Red);
-                spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
-
-                spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.Red);
-                if(Player != null) spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.Red);
-                spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.Red);
-                spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.Red);
+                spriteBatch.DrawString(GUIFont, "Score: " + Score, new Vector2(GraphicsDevice.Viewport.Width - 90, 10), Color.White);
+                if(Player != null) spriteBatch.DrawString(GUIFont, "Health: " + Player.Health, new Vector2(10, 10), Color.White);
+                spriteBatch.DrawString(GUIFont, currentTime.Add(-StartTime).ToString(@"mm\:ss"), new Vector2(GraphicsDevice.Viewport.Width - 700, 10), Color.White);
+                spriteBatch.DrawString(GUIFont, "Cornflower Corban - Violent Sol Team 12/2015", new Vector2(GraphicsDevice.Viewport.Width - 396, GraphicsDevice.Viewport.Height - 30), Color.White);
 
                 spriteBatch.End();
             }
